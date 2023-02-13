@@ -1,0 +1,22 @@
+.text {
+  width: 98%;
+  height: 100px;
+}
+
+.wrapper {
+  display: flex;
+  margin: 10px auto;
+}
+
+.wrapper_ins {
+  width: 93%;
+}
+
+.img {
+  margin: 0 10px;
+}
+
+.button {
+  position: relative;
+  left: 85%;
+}

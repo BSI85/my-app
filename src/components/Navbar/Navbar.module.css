@@ -1,0 +1,16 @@
+.navbar {
+  grid-area: n;
+  background: darkseagreen;
+}
+
+.item {
+  background-color: aliceblue;
+}
+
+.active {
+  border: 1px solid red;
+}
+
+.item.active {
+  border-radius: 5px;
+}

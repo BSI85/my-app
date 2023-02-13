@@ -8,32 +8,3 @@
   width: 1200px;
   margin: 0 auto;
 }
-
-.header {
-  grid-area: h;
-  background: burlywood;
-}
-
-.header img {
-  width: 100px;
-}
-
-.navbar {
-  grid-area: n;
-  background: darkseagreen;
-}
-
-.profile {
-  grid-area: cont;
-  background: darkgrey;
-}
-
-.profile .img {
-  height: 200px;
-  overflow: hidden;
-}
-
-.profile .img img {
-  object-fit: fill;
-  /* width: 100%; */
-}

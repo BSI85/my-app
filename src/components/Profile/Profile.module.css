@@ -1,0 +1,14 @@
+.profile {
+  grid-area: cont;
+  background: darkgrey;
+}
+
+.profile .img {
+  height: 200px;
+  overflow: hidden;
+}
+
+.profile .img img {
+  object-fit: fill;
+  /* width: 100%; */
+}

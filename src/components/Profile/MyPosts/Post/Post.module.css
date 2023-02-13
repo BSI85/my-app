@@ -1,0 +1,14 @@
+.item {
+  background-color: blue;
+  width: 90%;
+}
+.like {
+  color: darkgreen;
+}
+.wrapper {
+  display: flex;
+  margin: 10px auto;
+}
+.img {
+  margin: 0 10px;
+}
