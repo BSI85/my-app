@@ -1,0 +1,17 @@
+.header {
+  background: url(../../pictures/header.png);
+  display: flex;
+}
+
+.header .logo img {
+  width: 100px;
+}
+
+.header .img {
+  height: 100px;
+  overflow: hidden;
+}
+
+.header .img img {
+  object-fit: fill;
+}

@@ -1,16 +1,17 @@
-.navbar {
-  grid-area: n;
-  background: darkseagreen;
+.item_box {
+  margin: 10px;
+  font-size: 18px;
+  text-transform: uppercase;
+}
+
+.item_box:last-of-type {
+  margin-top: 30px;
 }
 
 .item {
-  background-color: aliceblue;
+  color: aliceblue;
 }
 
-.active {
-  border: 1px solid red;
-}
-
-.item.active {
-  border-radius: 5px;
+.activeLink {
+  color: crimson;
 }
