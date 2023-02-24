@@ -1,0 +1,8 @@
+.ava {
+  margin: 3px;
+}
+
+.ava img {
+  max-width: 50px;
+  border-radius: 25%;
+}

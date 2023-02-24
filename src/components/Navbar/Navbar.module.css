@@ -4,8 +4,14 @@
   text-transform: uppercase;
 }
 
+.item_box:nth-of-type(6) {
+  margin-top: 30px;
+}
+
 .item_box:last-of-type {
   margin-top: 30px;
+  font-size: 14px;
+  color: aliceblue;
 }
 
 .item {
@@ -14,4 +20,9 @@
 
 .activeLink {
   color: crimson;
+}
+
+.online__wrapper {
+  display: flex;
+  flex-wrap: wrap;
 }

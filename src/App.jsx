@@ -7,8 +7,9 @@ import Profile from './components/Profile/Profile';
 import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
+import Friends from './components/Friends/Friends';
 
-const App = () => {
+const App = (props) => {
   return (
     <BrowserRouter>
       <div className="app_wrapper">
@@ -16,12 +17,14 @@ const App = () => {
           <Header />
         </div>
         <div className="app_wrapper__navbar">
-          <Navbar />
+          <Navbar state={props.state.friendsPage} />
         </div>
         <div className="app_wrapper__content">
           <Routes>
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/dialogs/*" element={<Dialogs />} />
+            <Route exact path="/" element={<Profile state={props.state.profilePage} dispatch={props.dispatch} />} />
+            <Route path="/profile" element={<Profile state={props.state.profilePage} dispatch={props.dispatch} />} />
+            <Route path="/friends" element={<Friends state={props.state.friendsPage} />} />
+            <Route path="/dialogs/*" element={<Dialogs state={props.state.dialogsPage} dispatch={props.dispatch} />} />
             <Route path="/news" element={<News />} />
             <Route path="/music" element={<Music />} />
             <Route path="/settings" element={<Settings />} />

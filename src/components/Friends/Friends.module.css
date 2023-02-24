@@ -1,0 +1,10 @@
+.friends__wrapper {
+  max-width: 80vw;
+  min-height: fit-content;
+}
+.friends__header {
+}
+.friends__items {
+  display: flex;
+  flex-wrap: wrap;
+}

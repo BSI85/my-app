@@ -5,7 +5,7 @@ const ProfileInfo = () => {
   return (
     <div className={classes.profileInfo}>
       <div className={classes.avatar}>
-        <img src={require('../../../pictures/user_01.png')} alt="avatar" />
+        <img src={require('../../../pictures/user_7.png')} alt="avatar" />
       </div>
       <div className={classes.bio}>
         <p className={classes.name}>Valera Zhiroslavsky</p>
