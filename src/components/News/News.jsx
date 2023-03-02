@@ -1,7 +1,12 @@
 import React from 'react';
 
-const News = () => {
-  return <div>News</div>;
-};
+class News extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return <div>News</div>;
+  }
+}
 
 export default News;

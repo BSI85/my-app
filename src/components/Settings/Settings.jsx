@@ -1,7 +1,11 @@
 import React from 'react';
-
-const Settings = () => {
-  return <div>Settings</div>;
-};
+class Settings extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return <div>Settings</div>;
+  }
+}
 
 export default Settings;

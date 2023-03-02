@@ -1,39 +1,64 @@
 import React from 'react';
 import classes from './Newpost.module.css';
-import { addPostCreator, updateNewPostTextCreator } from '../../../../redux/profile-reducer';
 
-const Newpost = (props) => {
-  let newPostElement = React.createRef();
+class Newpost extends React.Component {
+  constructor(props) {
+    super(props);
+  }
 
-  let addNewPost = () => {
-    props.dispatch(addPostCreator());
+  onAddpost = () => {
+    this.props.addPost();
   };
 
-  let onPostChange = () => {
-    let text = newPostElement.current.value;
-    props.dispatch(updateNewPostTextCreator(text));
+  onPostChange = (event) => {
+    let text = event.target.value;
+    this.props.PostChange(text);
   };
 
-  return (
-    <div>
-      <div className={classes.wrapper}>
-        <div className={classes.img}>
-          <img src={require('./icons8-customer-50.png')} alt="" />
+  render() {
+    return (
+      <div>
+        <div className={classes.wrapper}>
+          <div className={classes.img}>
+            <img src={require('./icons8-customer-50.png')} alt="" />
+          </div>
+          <form className={classes.wrapper_ins}>
+            <textarea onChange={this.onPostChange} className={classes.text} value={this.props.newPostText} />
+          </form>
         </div>
-        <form className={classes.wrapper_ins}>
-          <textarea
-            onChange={onPostChange}
-            className={classes.text}
-            ref={newPostElement}
-            value={props.state.newPostText}
-          />
-        </form>
+        <div className={classes.button}>
+          <button onClick={this.onAddpost}>Send message</button>
+        </div>
       </div>
-      <div className={classes.button}>
-        <button onClick={addNewPost}>Send message</button>
-      </div>
-    </div>
-  );
-};
+    );
+  }
+}
+
+// const Newpost = (props) => {
+//   let onAddpost = () => {
+//     props.addPost();
+//   };
+
+//   let onPostChange = (event) => {
+//     let text = event.target.value;
+//     props.PostChange(text);
+//   };
+
+//   return (
+//     <div>
+//       <div className={classes.wrapper}>
+//         <div className={classes.img}>
+//           <img src={require('./icons8-customer-50.png')} alt="" />
+//         </div>
+//         <form className={classes.wrapper_ins}>
+//           <textarea onChange={onPostChange} className={classes.text} value={props.newPostText} />
+//         </form>
+//       </div>
+//       <div className={classes.button}>
+//         <button onClick={onAddpost}>Send message</button>
+//       </div>
+//     </div>
+//   );
+// };
 
 export default Newpost;

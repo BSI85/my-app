@@ -2,40 +2,81 @@ import React from 'react';
 import classes from './Dialogs.module.css';
 import Message from './Message/Message';
 import DialogItem from './DialogItem/DialogItem';
-import { sendMessageCreator, updateNewMessageTextCreator } from '../../redux/dialogs-reducer';
 
-const Dialogs = (props) => {
-  let sendNewMessage = () => {
-    props.dispatch(sendMessageCreator());
+class Dialogs extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  sendNewMessage = () => {
+    this.props.sendMessage();
   };
-
-  let onMessageChange = (event) => {
+  onMessageChange = (event) => {
     let text = event.target.value;
-    props.dispatch(updateNewMessageTextCreator(text));
+    this.props.updateNewMessageText(text);
   };
+  dialogsElements = this.props.dialogsPageState.dialogsData.map((d) => (
+    <DialogItem key={d.id} name={d.name} id={d.id} />
+  ));
+  messagesElements = this.props.dialogsPageState.messagesData.map((m) => <Message key={m.id} message={m.message} />);
 
-  let dialogsElements = props.state.dialogsData.map((d) => <DialogItem name={d.name} id={d.id} />);
-  let messagesElements = props.state.messagesData.map((m) => <Message message={m.message} />);
-  return (
-    <div className={classes.dialogs}>
-      <div className={classes.dialogs_block}>{dialogsElements}</div>
-      <div className={classes.messages_block}>
-        <div className={classes.messages}>{messagesElements}</div>
-        <div className={classes.sendarea}>
-          <div className={classes.textarea_wrapper}>
-            <textarea
-              className={classes.textarea}
-              onChange={onMessageChange}
-              value={props.state.newMessageText}
-            ></textarea>
-          </div>
-          <div>
-            <button onClick={sendNewMessage}>Send message</button>
+  render() {
+    return (
+      <div className={classes.dialogs}>
+        <div className={classes.dialogs_block}>{this.dialogsElements}</div>
+        <div className={classes.messages_block}>
+          <div className={classes.messages}>{this.messagesElements}</div>
+          <div className={classes.sendarea}>
+            <div className={classes.textarea_wrapper}>
+              <textarea
+                className={classes.textarea}
+                onChange={this.onMessageChange}
+                value={this.props.newMessageText}
+              ></textarea>
+            </div>
+            <div>
+              <button className={classes.button} onClick={this.sendNewMessage}>
+                Send message
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
+
+// const Dialogs = (props) => {
+//   let sendNewMessage = () => {
+//     props.sendMessage();
+//   };
+
+//   let onMessageChange = (event) => {
+//     let text = event.target.value;
+//     props.updateNewMessageText(text);
+//   };
+
+//   let dialogsElements = props.dialogsPageState.dialogsData.map((d) => (
+//     <DialogItem key={d.id} name={d.name} id={d.id} />
+//   ));
+//   let messagesElements = props.dialogsPageState.messagesData.map((m) => <Message key={m.id} message={m.message} />);
+//   return (
+//     <div className={classes.dialogs}>
+//       <div className={classes.dialogs_block}>{dialogsElements}</div>
+//       <div className={classes.messages_block}>
+//         <div className={classes.messages}>{messagesElements}</div>
+//         <div className={classes.sendarea}>
+//           <div className={classes.textarea_wrapper}>
+//             <textarea className={classes.textarea} onChange={onMessageChange} value={props.newMessageText}></textarea>
+//           </div>
+//           <div>
+//             <button className={classes.button} onClick={sendNewMessage}>
+//               Send message
+//             </button>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
 
 export default Dialogs;

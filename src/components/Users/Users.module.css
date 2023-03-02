@@ -1,0 +1,100 @@
+.users__wrapper {
+  max-width: 80vw;
+  min-height: fit-content;
+}
+.users__header {
+  text-align: center;
+  font-size: 24px;
+  line-height: 42px;
+  font-weight: 700;
+}
+.users__pages {
+  text-align: center;
+  font-size: 18px;
+}
+.users__pages span {
+  padding: 5px;
+}
+
+.selectedPage {
+  font-weight: 700;
+}
+
+.users__items {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.user__wrapper {
+  border: 2px solid darkslategray;
+  margin: 8px;
+  flex: 0 1 300px;
+}
+
+.user__header {
+  display: grid;
+  grid-template-columns: 5fr 1fr;
+}
+.status {
+  font-size: 12px;
+  font-style: italic;
+  align-self: center;
+  padding: 0 3px;
+}
+.online {
+  min-height: 18px;
+  font-size: 18px;
+  margin: 3px;
+  color: #16a036;
+  text-align: right;
+  font-weight: 700;
+}
+
+.online::before {
+  content: '◉';
+  margin-right: 5px;
+  color: #16a036;
+}
+
+.offline {
+  min-height: 24px;
+}
+
+.ava img {
+  max-width: 300px;
+  margin: 3px;
+  object-fit: contain;
+}
+
+.bottom {
+  display: grid;
+  grid-template-columns: 4fr 1fr;
+}
+
+.name__age {
+  font-size: 20px;
+  margin: 10px 5px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.country__city {
+  font-size: 14px;
+  text-align: center;
+  margin: 10px 5px;
+}
+
+.button {
+  text-align: center;
+  align-self: center;
+  margin: 0 10px;
+}
+
+.button button {
+  background-color: dimgrey;
+  color: #ffffff;
+  padding: 2px 5px;
+  box-shadow: 1px 2px darkslategrey;
+  border-radius: 2px;
+  min-width: 65px;
+}

@@ -1,16 +1,23 @@
 import React from 'react';
 import classes from './MyPosts.module.css';
 import Post from './Post/Post';
-import Newpost from './Newpost/Newpost';
+import NewpostContainer from './Newpost/NewpostContainer';
 
-const MyPosts = (props) => {
-  let postsElements = props.state.postsData.map((p) => <Post message={p.post} likesCount={p.likes} />);
-  return (
-    <div className={classes.myposts}>
-      <Newpost state={props.state} dispatch={props.dispatch} />
-      {postsElements}
-    </div>
-  );
-};
+class MyPosts extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <div className={classes.myposts}>
+        <NewpostContainer />
+        {this.props.postsData.map((p) => (
+          <Post key={p.id} message={p.post} likesCount={p.likes} />
+        ))}
+      </div>
+    );
+  }
+}
 
 export default MyPosts;
