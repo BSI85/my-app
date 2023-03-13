@@ -1,15 +1,15 @@
 import React from 'react';
+import Preloader from '../../Common/Preloader';
 import classes from './ProfileInfo.module.css';
 
-class ProfileInfo extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-  render() {
+const ProfileInfo = (props) => {
+  if (!props.profile) {
+    return <Preloader />;
+  } else
     return (
       <div className={classes.profileInfo}>
         <div className={classes.avatar}>
-          <img src={require('../../../pictures/user_7.png')} alt="avatar" />
+          <img src={props.profile.photos.small} alt="avatar" />
         </div>
         <div className={classes.bio}>
           <p className={classes.name}>Valera Zhiroslavsky</p>
@@ -21,7 +21,6 @@ class ProfileInfo extends React.Component {
         </div>
       </div>
     );
-  }
-}
+};
 
 export default ProfileInfo;

@@ -1,6 +1,8 @@
 .header {
   background: url(../../pictures/header.png);
   display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .header .logo img {
@@ -14,4 +16,15 @@
 
 .header .img img {
   object-fit: fill;
+}
+
+.login__block {
+  display: flex;
+  padding: 10px;
+  text-align: center;
+  line-height: 70px;
+  font-size: 24px;
+  font-weight: 700;
+  margin-right: 50px;
+  color: #0e0f10;
 }

@@ -11,7 +11,7 @@ class Profile extends React.Component {
   render() {
     return (
       <div className={classes.profile}>
-        <ProfileInfo />
+        <ProfileInfo profile={this.props.profile} />
         <MyPostsContainer />
       </div>
     );
