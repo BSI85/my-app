@@ -9,7 +9,15 @@ const Header = (props) => {
         <img src={require('../../pictures/62c68a00b8203_json_image_1657178624.webp')} alt="" />
       </div>
 
-      <div className={classes.login__block}>{props.isAuth ? props.login : <NavLink to={'/login'}>Login</NavLink>}</div>
+      <div className={classes.login__block}>
+        {props.isAuth ? (
+          <div>
+            {props.login} - <button onClick={props.logOut}>Log out</button>
+          </div>
+        ) : (
+          <NavLink to={'/login'}>Login</NavLink>
+        )}
+      </div>
     </header>
   );
 };

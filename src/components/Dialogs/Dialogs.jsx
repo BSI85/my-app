@@ -2,19 +2,17 @@ import React from 'react';
 import classes from './Dialogs.module.css';
 import Message from './Message/Message';
 import DialogItem from './DialogItem/DialogItem';
-import { Navigate } from 'react-router-dom';
+import { Field, reduxForm } from 'redux-form';
+import { Textarea } from '../Common/FormsControl/FormsControl';
+import { maxLengthCreator, requiredField } from '../Common/Validators/validators';
 
 class Dialogs extends React.Component {
   constructor(props) {
     super(props);
   }
 
-  sendNewMessage = () => {
-    this.props.sendMessage();
-  };
-  onMessageChange = (event) => {
-    let text = event.target.value;
-    this.props.updateNewMessageText(text);
+  addNewMessage = (a) => {
+    this.props.sendMessage(a.newMessageBody);
   };
 
   dialogsElements = this.props.dialogsPageState.dialogsData.map((d) => (
@@ -23,7 +21,6 @@ class Dialogs extends React.Component {
   messagesElements = this.props.dialogsPageState.messagesData.map((m) => <Message key={m.id} message={m.message} />);
 
   render() {
-    if (!this.props.isAuth) return <Navigate to={'/login'} />;
     return (
       <div className={classes.dialogs}>
         <div className={classes.dialogs_block}>{this.dialogsElements}</div>
@@ -34,24 +31,35 @@ class Dialogs extends React.Component {
             ))}
           </div>
           <div className={classes.sendarea}>
-            <div className={classes.textarea_wrapper}>
-              <textarea
-                className={classes.textarea}
-                onChange={this.onMessageChange}
-                value={this.props.newMessageText}
-              ></textarea>
-            </div>
-            <div>
-              <button className={classes.button} onClick={this.sendNewMessage}>
-                Send message
-              </button>
-            </div>
+            <DialogFormRedux onSubmit={this.addNewMessage} />
           </div>
         </div>
       </div>
     );
   }
 }
+let maxLength20 = maxLengthCreator(20);
+
+const DialogForm = (props) => {
+  return (
+    <form className={classes.textarea_wrapper} onSubmit={props.handleSubmit}>
+      <Field
+        component={Textarea}
+        validate={[requiredField, maxLength20]}
+        name="newMessageBody"
+        placeholder="Enter your message"
+        className={classes.textarea}
+      ></Field>
+      <div>
+        <button className={classes.button}>Send message</button>
+      </div>
+    </form>
+  );
+};
+
+const DialogFormRedux = reduxForm({
+  form: 'dialog',
+})(DialogForm);
 
 // const Dialogs = (props) => {
 //   let sendNewMessage = () => {

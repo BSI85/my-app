@@ -1,64 +1,45 @@
 import React from 'react';
+import { Field, reduxForm } from 'redux-form';
+import { Textarea } from '../../../Common/FormsControl/FormsControl';
+import { requiredField, maxLengthCreator } from '../../../Common/Validators/validators';
 import classes from './Newpost.module.css';
+
+const maxLength30 = maxLengthCreator(30);
 
 class Newpost extends React.Component {
   constructor(props) {
     super(props);
   }
 
-  onAddpost = () => {
-    this.props.addPost();
-  };
-
-  onPostChange = (event) => {
-    let text = event.target.value;
-    this.props.PostChange(text);
+  addNewPost = (a) => {
+    this.props.addPost(a.newPostText);
   };
 
   render() {
-    return (
-      <div>
-        <div className={classes.wrapper}>
-          <div className={classes.img}>
-            <img src={require('./icons8-customer-50.png')} alt="" />
-          </div>
-          <form className={classes.wrapper_ins}>
-            <textarea onChange={this.onPostChange} className={classes.text} value={this.props.newPostText} />
-          </form>
-        </div>
-        <div className={classes.button}>
-          <button onClick={this.onAddpost}>Send message</button>
-        </div>
-      </div>
-    );
+    return <NewpostFormRedux onSubmit={this.addNewPost} />;
   }
 }
 
-// const Newpost = (props) => {
-//   let onAddpost = () => {
-//     props.addPost();
-//   };
+const NewpostForm = (props) => {
+  return (
+    <form className={classes.wrapper} onSubmit={props.handleSubmit}>
+      <div className={classes.img}>
+        <img src={require('./icons8-customer-50.png')} alt="" />
+      </div>
+      <Field
+        className={classes.field_ins}
+        component={Textarea}
+        name="newPostText"
+        placeholder="Write something..."
+        validate={[requiredField, maxLength30]}
+      ></Field>
+      <button className={classes.button}>Send message</button>
+    </form>
+  );
+};
 
-//   let onPostChange = (event) => {
-//     let text = event.target.value;
-//     props.PostChange(text);
-//   };
-
-//   return (
-//     <div>
-//       <div className={classes.wrapper}>
-//         <div className={classes.img}>
-//           <img src={require('./icons8-customer-50.png')} alt="" />
-//         </div>
-//         <form className={classes.wrapper_ins}>
-//           <textarea onChange={onPostChange} className={classes.text} value={props.newPostText} />
-//         </form>
-//       </div>
-//       <div className={classes.button}>
-//         <button onClick={onAddpost}>Send message</button>
-//       </div>
-//     </div>
-//   );
-// };
+const NewpostFormRedux = reduxForm({
+  form: 'newPost',
+})(NewpostForm);
 
 export default Newpost;

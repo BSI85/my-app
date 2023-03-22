@@ -25,9 +25,22 @@ export const authAPI = {
   getAuth() {
     return instance.get(`auth/me`).then((response) => response.data);
   },
+  logIn(email, password, rememberMe = false) {
+    return instance.post('auth/login', { email, password, rememberMe }).then((response) => response.data);
+  },
+  logOut() {
+    return instance.delete('auth/login').then((response) => response.data);
+  },
 };
+
 export const profileAPI = {
   getProfile(userId) {
     return instance.get(`profile/${userId}`).then((response) => response.data);
+  },
+  getStatus(userId = 28295) {
+    return instance.get(`/profile/status/${userId}`).then((response) => response.data);
+  },
+  updateStatus(status) {
+    return instance.put(`/profile/status/`, { status: status }).then((response) => response.data);
   },
 };

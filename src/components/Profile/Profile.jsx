@@ -11,7 +11,11 @@ class Profile extends React.Component {
   render() {
     return (
       <div className={classes.profile}>
-        <ProfileInfo profile={this.props.profile} />
+        <ProfileInfo
+          profile={this.props.profile}
+          status={this.props.status}
+          updateUserStatus={this.props.updateUserStatus}
+        />
         <MyPostsContainer />
       </div>
     );

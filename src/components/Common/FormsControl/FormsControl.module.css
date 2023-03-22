@@ -1,0 +1,26 @@
+textarea::-webkit-resizer {
+  display: none;
+}
+
+textarea {
+  width: 100%;
+  height: 100%;
+}
+
+.formControl__wrapper {
+  width: 90%;
+  margin-right: 3%;
+}
+
+.formControl__wrapper.error input,
+.formControl__wrapper.error textarea {
+  box-shadow: 0 0 5px red;
+}
+
+.formControl__wrapper.error span {
+  color: red;
+}
+
+.form_summary_error {
+  box-shadow: 0 0 5px red;
+}

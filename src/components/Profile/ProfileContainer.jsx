@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Profile from './Profile';
-import { getUserProfile } from '../../redux/profile-reducer';
-import { useParams } from 'react-router-dom';
+import { getUserProfile, getUserStatus, updateUserStatus } from '../../redux/profile-reducer';
+import { Navigate, useParams } from 'react-router-dom';
 import { withAuthRedirect } from '../hoc/withAuthRedirect';
+import { compose } from 'redux';
 
 class ProfileContainer extends React.Component {
   constructor(props) {
@@ -12,15 +13,31 @@ class ProfileContainer extends React.Component {
   componentDidMount() {
     let userId = this.props.match.params.userId;
     if (!userId) {
-      userId = 28295;
+      userId = this.props.authorizedUserId;
     }
     this.props.getUserProfile(userId);
+    this.props.getUserStatus(userId);
   }
 
   render() {
-    return <Profile {...this.props} profile={this.props.profile} />;
+    if (!this.props.isAuth) return <Navigate to={'/login'} />;
+    return (
+      <Profile
+        {...this.props}
+        profile={this.props.profile}
+        status={this.props.status}
+        updateUserStatus={this.props.updateUserStatus}
+      />
+    );
   }
 }
+
+let mapStateToProps = (state) => ({
+  profile: state.profilePage.profile,
+  status: state.profilePage.status,
+  authorizedUserId: state.auth.userId,
+  isAuth: state.auth.isAuth,
+});
 
 export function withRouter(Children) {
   return (props) => {
@@ -29,12 +46,8 @@ export function withRouter(Children) {
   };
 }
 
-let AuthRedirectComponent = withAuthRedirect(ProfileContainer);
-
-let mapStateToProps = (state) => ({
-  profile: state.profilePage.profile,
-});
-
-let WithUrlDataContainterComponent = withRouter(AuthRedirectComponent);
-
-export default connect(mapStateToProps, { getUserProfile })(WithUrlDataContainterComponent);
+export default compose(
+  connect(mapStateToProps, { getUserProfile, getUserStatus, updateUserStatus }),
+  withRouter,
+  withAuthRedirect
+)(ProfileContainer);
