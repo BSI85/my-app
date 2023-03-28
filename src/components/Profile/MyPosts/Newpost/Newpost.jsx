@@ -1,24 +1,19 @@
 import React from 'react';
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm, reset } from 'redux-form';
 import { Textarea } from '../../../Common/FormsControl/FormsControl';
 import { requiredField, maxLengthCreator } from '../../../Common/Validators/validators';
 import classes from './Newpost.module.css';
 
 const maxLength30 = maxLengthCreator(30);
 
-class Newpost extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  addNewPost = (a) => {
-    this.props.addPost(a.newPostText);
+const Newpost = (props) => {
+  let addNewPost = (a, dispatch) => {
+    props.addPost(a.newPostText);
+    dispatch(reset('newPost'));
   };
 
-  render() {
-    return <NewpostFormRedux onSubmit={this.addNewPost} />;
-  }
-}
+  return <NewpostFormRedux onSubmit={addNewPost} />;
+};
 
 const NewpostForm = (props) => {
   return (
