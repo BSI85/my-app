@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import './App.css';
-import DialogsContainer from './components/Dialogs/DialogsContainer';
+//import DialogsContainer from './components/Dialogs/DialogsContainer';
+
 import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
@@ -15,6 +16,7 @@ import { initializeApp } from './redux/app-reduser';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import Preloader from './components/Common/Preloader';
+const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
 
 class App extends React.Component {
   componentDidMount() {
@@ -37,7 +39,14 @@ class App extends React.Component {
               <Route path="/" element={<Navigate to={'/profile/'} />} />
               <Route path="/profile/:userId?" element={<ProfileContainer />} />
               <Route path="/users" element={<UsersContainer />} />
-              <Route path="/dialogs/*" element={<DialogsContainer />} />
+              <Route
+                path="/dialogs/*"
+                element={
+                  <Suspense fallback={<Preloader />}>
+                    <DialogsContainer />
+                  </Suspense>
+                }
+              />
               <Route path="/news" element={<News />} />
               <Route path="/music" element={<Music />} />
               <Route path="/settings" element={<Settings />} />

@@ -1,0 +1,19 @@
+.paginator__pages {
+  text-align: center;
+  font-size: 18px;
+  margin: 30px auto;
+}
+.paginator__pages span {
+  padding: 5px 10px;
+  border: 1px solid black;
+  border-radius: 5px;
+  margin: 0 5px;
+}
+
+.paginator__pages span:hover {
+  cursor: pointer;
+}
+
+.selectedPage {
+  font-weight: 700;
+}

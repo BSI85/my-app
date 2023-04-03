@@ -22,9 +22,9 @@ const Login = (props) => {
   );
 };
 
-const LoginForm = (props) => {
+const LoginForm = ({ handleSubmit, error }) => {
   return (
-    <form className={classes.login__form} onSubmit={props.handleSubmit}>
+    <form className={classes.login__form} onSubmit={handleSubmit}>
       <div className={classes.login__login}>
         <Field type="text" component={Input} name={'email'} placeholder={'Email'} validate={[requiredField]} />
       </div>
@@ -40,7 +40,7 @@ const LoginForm = (props) => {
       <div>
         <Field type={'checkbox'} name={'rememberMe'} component={Input} /> remember me
       </div>
-      <div className={classes.form_summary_error}>{props.error}</div>
+      <div className={classes.form_summary_error}>{error}</div>
       <div>
         <button>Login</button>
       </div>

@@ -8,25 +8,6 @@
   line-height: 42px;
   font-weight: 700;
 }
-.users__pages {
-  text-align: center;
-  font-size: 18px;
-  margin: 10px auto;
-}
-.users__pages span {
-  padding: 5px 10px;
-  border: 1px solid black;
-  border-radius: 5px;
-  margin: 0 5px;
-}
-
-.users__pages span:hover {
-  cursor: pointer;
-}
-
-.selectedPage {
-  font-weight: 700;
-}
 
 .users__items {
   display: flex;

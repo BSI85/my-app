@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import classes from './ProfileStatus.module.css';
 
-const ProfileStatusWithHooks = (props) => {
+const ProfileStatus = (props) => {
   let [editMode, setEditMode] = useState(false);
   let [status, setStatus] = useState(props.status);
 
@@ -44,4 +44,4 @@ const ProfileStatusWithHooks = (props) => {
   );
 };
 
-export default ProfileStatusWithHooks;
+export default ProfileStatus;
