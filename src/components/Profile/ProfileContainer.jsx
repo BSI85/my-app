@@ -7,9 +7,6 @@ import { withAuthRedirect } from '../hoc/withAuthRedirect';
 import { compose } from 'redux';
 
 class ProfileContainer extends React.Component {
-  constructor(props) {
-    super(props);
-  }
   componentDidMount() {
     let userId = this.props.match.params.userId;
     if (!userId) {

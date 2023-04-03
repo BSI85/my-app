@@ -4,9 +4,6 @@ import classes from './Navbar.module.css';
 import Online from './Online/Online';
 
 class Navbar extends React.Component {
-  constructor(props) {
-    super(props);
-  }
   aIa = ({ isActive }) => (isActive ? classes.activeLink : classes.item);
 
   render() {

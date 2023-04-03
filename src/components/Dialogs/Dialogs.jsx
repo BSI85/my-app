@@ -7,10 +7,6 @@ import { Textarea } from '../Common/FormsControl/FormsControl';
 import { maxLengthCreator, requiredField } from '../Common/Validators/validators';
 
 class Dialogs extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   addNewMessage = (a) => {
     this.props.sendMessage(a.newMessageBody);
   };
