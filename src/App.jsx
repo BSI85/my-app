@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { HashRouter, BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import './App.css';
 //import DialogsContainer from './components/Dialogs/DialogsContainer';
 
@@ -28,7 +28,7 @@ class App extends React.Component {
       return <Preloader />;
     }
     return (
-      <BrowserRouter>
+      <HashRouter>
         <div className="app_wrapper">
           <div className="app_wrapper__header">
             <HeaderContainer />
@@ -36,7 +36,7 @@ class App extends React.Component {
           <div className="app_wrapper__navbar">{<NavbarContainer />}</div>
           <div className="app_wrapper__content">
             <Routes>
-              <Route path="/" element={<Navigate to={'/profile/'} />} />
+              <Route path="/*" element={<Navigate to={'/profile/'} />} />
               <Route path="/profile/:userId?" element={<ProfileContainer />} />
               <Route path="/users" element={<UsersContainer />} />
               <Route
@@ -54,7 +54,7 @@ class App extends React.Component {
             </Routes>
           </div>
         </div>
-      </BrowserRouter>
+      </HashRouter>
     );
   }
 }
