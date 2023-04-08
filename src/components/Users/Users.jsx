@@ -4,21 +4,6 @@ import Paginator from '../Common/Paginator/Paginator';
 import User from './User/User';
 
 let Users = (props) => {
-  // let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
-  // let pages = [];
-  // for (let i = 1; i < pagesCount; i++) {
-  //   pages.push(i);
-  // }
-  // let curPage = props.currentPage;
-  // let resultPages = [];
-  // if (curPage < 5) {
-  //   resultPages = [1, 2, 3, 4, 5, '...', pagesCount];
-  // } else if (curPage < pagesCount - 3) {
-  //   resultPages = [1, '...', ...pages.slice(curPage - 3, curPage + 2), '...', pagesCount];
-  // } else {
-  //   resultPages = [1, '...', pagesCount - 4, pagesCount - 3, pagesCount - 2, pagesCount - 1, pagesCount];
-  // }
-
   return (
     <div className={classes.users__wrapper}>
       <div className={classes.users__header}>Users</div>

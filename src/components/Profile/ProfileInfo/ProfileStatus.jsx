@@ -26,7 +26,7 @@ const ProfileStatus = (props) => {
     <div className={classes.status}>
       {!editMode ? (
         <div>
-          <span onDoubleClick={activateEditMode}>{props.status || 'Введите Ваш статус'}</span>
+          <span onDoubleClick={props.isOwner ? activateEditMode : null}>{props.status || 'Введите Ваш статус'}</span>
         </div>
       ) : (
         <div>

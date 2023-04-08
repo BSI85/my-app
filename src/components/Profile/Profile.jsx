@@ -8,6 +8,8 @@ class Profile extends React.Component {
     return (
       <div className={classes.profile}>
         <ProfileInfo
+          savePhoto={this.props.savePhoto}
+          isOwner={this.props.isOwner}
           profile={this.props.profile}
           status={this.props.status}
           updateUserStatus={this.props.updateUserStatus}

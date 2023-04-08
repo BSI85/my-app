@@ -1,9 +1,11 @@
 import { profileAPI } from '../components/api/api';
+import { stopSubmit } from 'redux-form';
 
 const ADD_POST = 'my-app/profile/ADD-POST';
 const DELETE_POST = 'my-app/profile/DELETE_POST';
 const SET_USER_PROFILE = 'my-app/profile/SET_USER_PROFILE';
 const SET_USER_STATUS = 'my-app/profile/SET_USER_STATUS';
+const SAVE_PHOTO_SUCCESS = 'my-app/profile/SAVE_PHOTO_SUCCESS';
 
 let initialState = {
   postsData: [
@@ -41,6 +43,13 @@ const profileReducer = (state = initialState, action) => {
       };
     }
 
+    case SAVE_PHOTO_SUCCESS: {
+      return {
+        ...state,
+        profile: { ...state.profile, photos: action.photos },
+      };
+    }
+
     default:
       return state;
   }
@@ -57,6 +66,8 @@ export const setUserProfile = (profile) => ({
 });
 
 export const setUserStatus = (status) => ({ type: SET_USER_STATUS, status });
+
+export const savePhotoSuccess = (photos) => ({ type: SAVE_PHOTO_SUCCESS, photos });
 
 //Thunks   Thunks   Thunks   Thunks
 
@@ -85,6 +96,30 @@ export const updateUserStatus = (status) => {
     const data = await profileAPI.updateStatus(status);
     if (data.resultCode === 0) {
       dispatch(setUserStatus(status));
+    }
+  };
+};
+
+export const savePhoto = (file) => {
+  return async (dispatch) => {
+    const data = await profileAPI.savePhoto(file);
+    if (data.resultCode === 0) {
+      dispatch(savePhotoSuccess(data.data.photos));
+    }
+  };
+};
+
+export const saveProfile = (profile) => {
+  return async (dispatch, getState) => {
+    const data = await profileAPI.saveProfile(profile);
+    const userId = getState().auth.userId;
+
+    if (data.resultCode === 0) {
+      dispatch(getUserProfile(userId));
+    } else {
+      let wrongNetwork = data.messages[0].slice(data.messages[0].indexOf('>') + 1, -1).toLowerCase();
+      dispatch(stopSubmit('settings', { contacts: { [wrongNetwork]: data.messages[0] } }));
+      return Promise.reject();
     }
   };
 };

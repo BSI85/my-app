@@ -1,26 +1,12 @@
-.users__wrapper {
-  max-width: 80vw;
-  min-height: fit-content;
-}
-.users__header {
-  text-align: center;
-  font-size: 24px;
-  line-height: 42px;
-  font-weight: 700;
-}
-
-.users__items {
-  display: flex;
-  flex-wrap: wrap;
-}
-
 .user__wrapper {
   border: 2px solid darkslategray;
   margin: 8px;
   flex: 0 1 300px;
+  max-width: 300px;
 }
 
 .user__header {
+  grid-area: 'h';
   display: grid;
   grid-template-columns: 5fr 1fr;
 }
@@ -48,19 +34,24 @@
 .offline {
   min-height: 24px;
 }
-
-.ava img {
-  max-width: 300px;
-  margin: 3px;
-  object-fit: contain;
+.main {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
 }
 
-.bottom {
-  display: grid;
-  grid-template-columns: 4fr 1fr;
+.ava img {
+  max-width: 100px;
+  margin: 3px;
+  object-fit: cover;
+}
+
+.info {
+  margin-bottom: 15px;
 }
 
 .name__age {
+  overflow: hidden;
+  word-break: break-word;
   font-size: 20px;
   margin: 10px 5px;
   font-weight: 700;
