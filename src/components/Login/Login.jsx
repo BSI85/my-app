@@ -9,7 +9,7 @@ import { Navigate } from 'react-router-dom';
 
 const Login = (props) => {
   const onSubmit = (formData) => {
-    props.logIn(formData.email, formData.password, formData.rememberMe);
+    props.logIn(formData.email, formData.password, formData.rememberMe, formData.captcha);
   };
   if (props.isAuth) {
     return <Navigate to={'/profile'} />;
@@ -17,12 +17,12 @@ const Login = (props) => {
   return (
     <div className={classes.login}>
       <h1 className={classes.login__header}>Login</h1>
-      <LoginReduxForm onSubmit={onSubmit} />
+      <LoginReduxForm onSubmit={onSubmit} captchaUrl={props.captchaUrl} />
     </div>
   );
 };
 
-const LoginForm = ({ handleSubmit, error }) => {
+const LoginForm = ({ handleSubmit, error, captchaUrl }) => {
   return (
     <form className={classes.login__form} onSubmit={handleSubmit}>
       <div className={classes.login__login}>
@@ -40,6 +40,12 @@ const LoginForm = ({ handleSubmit, error }) => {
       <div>
         <Field type={'checkbox'} name={'rememberMe'} component={Input} /> remember me
       </div>
+      {captchaUrl && (
+        <div className={classes.captcha}>
+          <img src={captchaUrl} alt="" />
+          <Field type="text" component={Input} name={'captcha'} validate={[requiredField]} />
+        </div>
+      )}
       <div className={classes.form_summary_error}>{error}</div>
       <div>
         <button>Login</button>
@@ -53,6 +59,7 @@ const LoginReduxForm = reduxForm({
 })(LoginForm);
 
 const mapStateToProps = (state) => ({
+  captchaUrl: state.auth.captchaUrl,
   isAuth: state.auth.isAuth,
 });
 

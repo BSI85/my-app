@@ -1,8 +1,7 @@
 import React, { Suspense } from 'react';
-import { HashRouter, BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
+import store from './redux/redux-store';
 import './App.css';
-//import DialogsContainer from './components/Dialogs/DialogsContainer';
-
 import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
@@ -13,14 +12,23 @@ import HeaderContainer from './components/Header/HeaderContainer';
 import Login from './components/Login/Login';
 import { useParams } from 'react-router-dom';
 import { initializeApp } from './redux/app-reduser';
-import { connect } from 'react-redux';
+import { Provider, connect } from 'react-redux';
 import { compose } from 'redux';
 import Preloader from './components/Common/Preloader';
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
 
 class App extends React.Component {
+  catchAllUnhandledErrors = (PromiseRejectionEvent) => {
+    alert('Some error occured');
+  };
+
   componentDidMount() {
     this.props.initializeApp();
+    window.addEventListener('unhandledrejection', this.catchAllUnhandledErrors);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('unhandledrejection', this.catchAllUnhandledErrors);
   }
 
   render() {
@@ -28,33 +36,37 @@ class App extends React.Component {
       return <Preloader />;
     }
     return (
-      <HashRouter>
-        <div className="app_wrapper">
-          <div className="app_wrapper__header">
-            <HeaderContainer />
-          </div>
-          <div className="app_wrapper__navbar">{<NavbarContainer />}</div>
-          <div className="app_wrapper__content">
-            <Routes>
-              <Route path="/*" element={<Navigate to={'/profile/'} />} />
-              <Route path="/profile/:userId?" element={<ProfileContainer />} />
-              <Route path="/users" element={<UsersContainer />} />
-              <Route
-                path="/dialogs/*"
-                element={
-                  <Suspense fallback={<Preloader />}>
-                    <DialogsContainer />
-                  </Suspense>
-                }
-              />
-              <Route path="/news" element={<News />} />
-              <Route path="/music" element={<Music />} />
-              <Route path="/settings" element={<Settings />} />
-              <Route path="/login" element={<Login />} />
-            </Routes>
-          </div>
+      <div className="app_wrapper">
+        <div className="app_wrapper__header">
+          <HeaderContainer />
         </div>
-      </HashRouter>
+        <div className="app_wrapper__navbar">{<NavbarContainer />}</div>
+        <div className="app_wrapper__content">
+          <Routes>
+            <Route path="/*" element={<Navigate to={'/profile/'} />} />
+            <Route path="/profile/:userId?" element={<ProfileContainer />} />
+            <Route path="/users" element={<UsersContainer />} />
+            <Route
+              path="/dialogs/*"
+              element={
+                <Suspense fallback={<Preloader />}>
+                  <DialogsContainer />
+                </Suspense>
+              }
+            />
+            <Route path="/news" element={<News />} />
+            <Route path="/music" element={<Music />} />
+            <Route path="/settings" element={<Settings />} />
+            <Route path="/login" element={<Login />} />
+            <Route
+              path="*"
+              render={() => {
+                <div>404 NOT FOUND</div>;
+              }}
+            />
+          </Routes>
+        </div>
+      </div>
     );
   }
 }
@@ -68,4 +80,16 @@ export function withRouter(Children) {
   };
 }
 
-export default compose(withRouter, connect(mapStateToProps, { initializeApp }))(App);
+let AppContainer = compose(withRouter, connect(mapStateToProps, { initializeApp }))(App);
+
+const MyApp = (props) => {
+  return (
+    <HashRouter>
+      <Provider store={store}>
+        <AppContainer />
+      </Provider>
+    </HashRouter>
+  );
+};
+
+export default MyApp;

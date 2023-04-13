@@ -3,6 +3,8 @@
   height: 30px;
   text-align: right;
   font-style: italic;
+  overflow: hidden;
+  word-break: break-word;
 }
 .input {
   border: 1px dotted red;
