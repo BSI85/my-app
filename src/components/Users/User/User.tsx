@@ -1,14 +1,23 @@
-import React from 'react';
+import React, { FC } from 'react';
 import classes from './User.module.css';
 import userPhoto from '../../../pictures/default_avatar.png';
 import { NavLink } from 'react-router-dom';
+import { UsersDataType } from '../../types/types';
 
-const User = (props) => {
+type PropsType = {
+  user: UsersDataType;
+  followingInProgress: Array<number>;
+  follow: (userId: number) => void;
+  unfollow: (userId: number) => void;
+};
+
+const User: FC<PropsType> = (props) => {
   return (
     <div className={classes.user__wrapper} key={props.user.id}>
       <div className={classes.user__header}>
         <div className={classes.status}>{props.user.status}</div>
-        {props.user.online ? <div className={classes.online}>online</div> : <div className={classes.offline}></div>}
+        {/* {props.user.online ? <div className={classes.online}>online</div> :  */}
+        <div className={classes.offline}></div>
       </div>
       <div className={classes.main}>
         <div className={classes.ava}>
@@ -18,9 +27,7 @@ const User = (props) => {
           {/* <img src={require(`../../../pictures/user_${props.user.id}.png`)} alt="avatar" /> */}
         </div>
         <div className={classes.info}>
-          <div className={classes.name__age}>
-            {props.user.name}, {props.user.age}
-          </div>
+          <div className={classes.name__age}>{props.user.name}</div>
           <div className={classes.country__city}>
             {'props.user.location.country'}, {'props.user.location.city'}
           </div>

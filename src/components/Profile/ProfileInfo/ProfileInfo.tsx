@@ -1,12 +1,27 @@
-import React from 'react';
+import React, { ChangeEvent, FC } from 'react';
 import Preloader from '../../Common/Preloader';
 import classes from './ProfileInfo.module.css';
 import ProfileStatus from './ProfileStatus';
 import userPhoto from '../../../pictures/default_avatar.png';
+import { ProfileType } from '../../types/types';
 
-const ProfileInfo = (props) => {
-  const onFileSelected = (e) => {
-    if (e.target.files.length) {
+type MapStateToPropsType = {
+  status: string;
+  profile: ProfileType;
+  isOwner: boolean;
+};
+type MapDispatchToPropsType = {
+  updateUserStatus: (status: string) => void;
+
+  savePhoto: (file: File | undefined) => void;
+};
+
+type PropsType = MapStateToPropsType & MapDispatchToPropsType;
+
+const ProfileInfo: FC<PropsType> = (props) => {
+  type contactsKeyType = keyof typeof props.profile.contacts;
+  const onFileSelected = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
       const file = e.target.files[0];
       props.savePhoto(file);
     }
@@ -40,20 +55,22 @@ const ProfileInfo = (props) => {
           )}
           <p className={classes.info}>
             <span>Contacts:</span>{' '}
-            {
-              // eslint-disable-next-line
-              Object.keys(props.profile.contacts).map((key) => {
-                if (props.profile.contacts[key])
-                  return <Contact contactTitle={key} contactValue={props.profile.contacts[key]} />;
-              })
-            }
+            {Object.keys(props.profile.contacts).map((key) => {
+              if (props.profile.contacts[key as contactsKeyType])
+                return <Contact contactTitle={key} contactValue={props.profile.contacts[key as contactsKeyType]} />;
+            })}
           </p>
         </div>
       </div>
     );
 };
 
-export const Contact = ({ contactTitle, contactValue }) => {
+type PropsTypeContact = {
+  contactTitle: string;
+  contactValue: string;
+};
+
+export const Contact: FC<PropsTypeContact> = ({ contactTitle, contactValue }) => {
   return (
     <div className={classes.contacts}>
       <span>{contactTitle}:</span> {contactValue}

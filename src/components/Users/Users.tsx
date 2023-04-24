@@ -1,12 +1,25 @@
-import React from 'react';
+import React, { FC } from 'react';
 import classes from './Users.module.css';
 import Paginator from '../Common/Paginator/Paginator';
 import User from './User/User';
+import { UsersDataType } from '../types/types';
 
-let Users = (props) => {
+type PropsType = {
+  usersData: Array<UsersDataType>;
+  totalUsersCount: number;
+  pageSize: number;
+  currentPage: number;
+  pageTitle: string;
+  onPageChange: (p: number) => void;
+  followingInProgress: Array<number>;
+  follow: (userId: number) => void;
+  unfollow: (userId: number) => void;
+};
+
+let Users: FC<PropsType> = (props) => {
   return (
     <div className={classes.users__wrapper}>
-      <div className={classes.users__header}>Users</div>
+      <div className={classes.users__header}>{props.pageTitle}</div>
       <Paginator
         totalUsersCount={props.totalUsersCount}
         pageSize={props.pageSize}

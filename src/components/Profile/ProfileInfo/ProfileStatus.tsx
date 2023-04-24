@@ -1,7 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, FC, ChangeEvent, DetailedHTMLProps, HTMLAttributes } from 'react';
 import classes from './ProfileStatus.module.css';
 
-const ProfileStatus = (props) => {
+type PropsType = {
+  status: string;
+  updateUserStatus: (status: string) => void;
+  isOwner: boolean;
+};
+
+const ProfileStatus: FC<PropsType> = (props) => {
   let [editMode, setEditMode] = useState(false);
   let [status, setStatus] = useState(props.status);
 
@@ -18,7 +24,7 @@ const ProfileStatus = (props) => {
     props.updateUserStatus(status);
   };
 
-  const onStatusChange = (e) => {
+  const onStatusChange = (e: ChangeEvent<HTMLInputElement>) => {
     setStatus(e.currentTarget.value);
   };
 
@@ -26,7 +32,9 @@ const ProfileStatus = (props) => {
     <div className={classes.status}>
       {!editMode ? (
         <div>
-          <span onDoubleClick={props.isOwner ? activateEditMode : null}>{props.status || 'Введите Ваш статус'}</span>
+          <span onDoubleClick={props.isOwner ? activateEditMode : undefined}>
+            {props.status || 'Введите Ваш статус'}
+          </span>
         </div>
       ) : (
         <div>

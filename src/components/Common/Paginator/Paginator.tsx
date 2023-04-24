@@ -1,14 +1,21 @@
 import React from 'react';
 import classes from './Paginator.module.css';
 
-let Paginator = (props) => {
+type PropsType = {
+  totalUsersCount: number;
+  pageSize: number;
+  currentPage: number;
+  onPageChange: (p: number) => void;
+};
+
+let Paginator = (props: PropsType) => {
   let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
-  let pages = [];
+  let pages: Array<number> = [];
   for (let i = 1; i < pagesCount; i++) {
     pages.push(i);
   }
   let curPage = props.currentPage;
-  let resultPages = [];
+  let resultPages: (number | string)[] = [];
   if (curPage < 5) {
     resultPages = [1, 2, 3, 4, 5, '...', pagesCount];
   } else if (curPage < pagesCount - 3) {

@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { FC } from 'react';
 import classes from './MyPosts.module.css';
 import Post from './Post/Post';
 import NewpostContainer from './Newpost/NewpostContainer';
+import { PostsDataType } from '../../types/types';
 
-const MyPosts = (props) => {
+type MapStateToPropsType = {
+  postsData: Array<PostsDataType>;
+};
+
+const MyPosts: FC<MapStateToPropsType> = (props) => {
   return (
     <div className={classes.myposts}>
       <NewpostContainer />

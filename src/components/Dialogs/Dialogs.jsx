@@ -11,10 +11,8 @@ class Dialogs extends React.Component {
     this.props.sendMessage(a.newMessageBody);
   };
 
-  dialogsElements = this.props.dialogsPageState.dialogsData.map((d) => (
-    <DialogItem key={d.id} name={d.name} id={d.id} />
-  ));
-  messagesElements = this.props.dialogsPageState.messagesData.map((m) => <Message key={m.id} message={m.message} />);
+  dialogsElements = this.props.dialogsData.map((d) => <DialogItem key={d.id} name={d.name} id={d.id} />);
+  messagesElements = this.props.messagesData.map((m) => <Message key={m.id} message={m.message} />);
 
   render() {
     return (
@@ -22,7 +20,7 @@ class Dialogs extends React.Component {
         <div className={classes.dialogs_block}>{this.dialogsElements}</div>
         <div className={classes.messages_block}>
           <div className={classes.messages}>
-            {this.props.dialogsPageState.messagesData.map((m) => (
+            {this.props.messagesData.map((m) => (
               <Message key={m.id} message={m.message} />
             ))}
           </div>
@@ -56,39 +54,5 @@ const DialogForm = (props) => {
 const DialogFormRedux = reduxForm({
   form: 'dialog',
 })(DialogForm);
-
-// const Dialogs = (props) => {
-//   let sendNewMessage = () => {
-//     props.sendMessage();
-//   };
-
-//   let onMessageChange = (event) => {
-//     let text = event.target.value;
-//     props.updateNewMessageText(text);
-//   };
-
-//   let dialogsElements = props.dialogsPageState.dialogsData.map((d) => (
-//     <DialogItem key={d.id} name={d.name} id={d.id} />
-//   ));
-//   let messagesElements = props.dialogsPageState.messagesData.map((m) => <Message key={m.id} message={m.message} />);
-//   return (
-//     <div className={classes.dialogs}>
-//       <div className={classes.dialogs_block}>{dialogsElements}</div>
-//       <div className={classes.messages_block}>
-//         <div className={classes.messages}>{messagesElements}</div>
-//         <div className={classes.sendarea}>
-//           <div className={classes.textarea_wrapper}>
-//             <textarea className={classes.textarea} onChange={onMessageChange} value={props.newMessageText}></textarea>
-//           </div>
-//           <div>
-//             <button className={classes.button} onClick={sendNewMessage}>
-//               Send message
-//             </button>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
 
 export default Dialogs;
