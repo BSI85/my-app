@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import classes from './MyPosts.module.css';
 import Post from './Post/Post';
 import NewpostContainer from './Newpost/NewpostContainer';
-import { PostsDataType } from '../../types/types';
+import { PostsDataType } from '../../types/ProfileType';
 
 type MapStateToPropsType = {
   postsData: Array<PostsDataType>;

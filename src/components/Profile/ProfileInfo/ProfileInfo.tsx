@@ -3,7 +3,7 @@ import Preloader from '../../Common/Preloader';
 import classes from './ProfileInfo.module.css';
 import ProfileStatus from './ProfileStatus';
 import userPhoto from '../../../pictures/default_avatar.png';
-import { ProfileType } from '../../types/types';
+import { ProfileType } from '../../types/ProfileType';
 
 type MapStateToPropsType = {
   status: string;
@@ -13,7 +13,7 @@ type MapStateToPropsType = {
 type MapDispatchToPropsType = {
   updateUserStatus: (status: string) => void;
 
-  savePhoto: (file: File | undefined) => void;
+  savePhoto: (file: File) => void;
 };
 
 type PropsType = MapStateToPropsType & MapDispatchToPropsType;

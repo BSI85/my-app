@@ -1,17 +1,6 @@
 import { ThunkAction } from 'redux-thunk';
-import { DialogsDataType, MessagesDataType } from '../components/types/types';
 import { AppStateType } from './redux-store';
-
-//Types
-type InitialStateType = {
-  dialogsData: Array<DialogsDataType>;
-  messagesData: Array<MessagesDataType>;
-};
-
-type sendMessageCreatorActionType = {
-  type: typeof SEND_MESSAGE;
-  addNewMessage: string;
-};
+import { InferActionsTypes } from '../components/types/types';
 
 const SEND_MESSAGE = 'my-app/dialogs/SEND-MESSAGE';
 
@@ -32,7 +21,10 @@ let initialState = {
   ],
 };
 
-const dialogsReducer = (state = initialState, action: sendMessageCreatorActionType): InitialStateType => {
+type InitialStateType = typeof initialState;
+type DialogsActionsType = InferActionsTypes<typeof dialogsActions>;
+
+const dialogsReducer = (state = initialState, action: DialogsActionsType): InitialStateType => {
   switch (action.type) {
     case SEND_MESSAGE: {
       return {
@@ -46,18 +38,16 @@ const dialogsReducer = (state = initialState, action: sendMessageCreatorActionTy
 };
 
 //Action creators:
-export const sendMessageCreator = (addNewMessage: string): sendMessageCreatorActionType => ({
-  type: SEND_MESSAGE,
-  addNewMessage,
-});
+
+const dialogsActions = {
+  sendMessageCreator: (addNewMessage: string) => ({ type: SEND_MESSAGE, addNewMessage } as const),
+};
 
 //Thunk Thunk Thunk
 
-export const sendMessage = (
-  addNewMessage: string
-): ThunkAction<void, AppStateType, unknown, sendMessageCreatorActionType> => {
+export const sendMessage = (addNewMessage: string): ThunkAction<void, AppStateType, unknown, DialogsActionsType> => {
   return (dispatch) => {
-    dispatch(sendMessageCreator(addNewMessage));
+    dispatch(dialogsActions.sendMessageCreator(addNewMessage));
   };
 };
 

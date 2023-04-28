@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import classes from './User.module.css';
 import userPhoto from '../../../pictures/default_avatar.png';
 import { NavLink } from 'react-router-dom';
-import { UsersDataType } from '../../types/types';
+import { UsersDataType } from '../../types/UsersDataType';
 
 type PropsType = {
   user: UsersDataType;

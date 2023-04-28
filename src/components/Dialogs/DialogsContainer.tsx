@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { withAuthRedirect } from '../hoc/withAuthRedirect';
 import { compose } from 'redux';
 import { AppStateType } from '../../redux/redux-store';
-import { DialogsDataType, MessagesDataType } from '../types/types';
+import { DialogsDataType, MessagesDataType } from '../types/DialogsDataType';
 
 type MapStateToPropsType = {
   dialogsData: Array<DialogsDataType>;

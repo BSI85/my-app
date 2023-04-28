@@ -13,7 +13,7 @@ import {
 } from '../../redux/users-selectors';
 
 import { compose } from 'redux';
-import { UsersDataType } from '../types/types';
+import { UsersDataType } from '../types/UsersDataType';
 import { AppStateType } from '../../redux/redux-store';
 
 type MapStateToPropsType = {

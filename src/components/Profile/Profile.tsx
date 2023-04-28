@@ -2,7 +2,7 @@ import React from 'react';
 import classes from './Profile.module.css';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 import MyPostsContainer from './MyPosts/MyPostsContainer';
-import { ProfileType } from '../types/types';
+import { ProfileType } from '../types/ProfileType';
 
 type PropsType = {
   status: string;
@@ -10,7 +10,7 @@ type PropsType = {
   isOwner: boolean;
   authorizedUserId: number | null;
   isAuth: boolean;
-  savePhoto: (file: File | undefined) => void;
+  savePhoto: (file: File) => void;
   updateUserStatus: (status: string) => void;
 };
 

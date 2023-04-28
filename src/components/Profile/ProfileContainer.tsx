@@ -5,7 +5,7 @@ import { getUserProfile, getUserStatus, updateUserStatus, savePhoto } from '../.
 import { Navigate, useParams } from 'react-router-dom';
 import { withAuthRedirect } from '../hoc/withAuthRedirect';
 import { compose } from 'redux';
-import { ProfileType } from '../types/types';
+import { ProfileType } from '../types/ProfileType';
 import { AppStateType } from '../../redux/redux-store';
 
 type MapStateToPropsType = {
@@ -18,7 +18,7 @@ type MapDispatchToPropsType = {
   updateUserStatus: (status: string) => void;
   getUserProfile: (userId: number) => void;
   getUserStatus: (userId: number) => void;
-  savePhoto: (file: File | undefined) => void;
+  savePhoto: (file: File) => void;
 };
 
 type LocalPropsType = {

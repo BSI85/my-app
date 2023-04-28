@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import MyPosts from './MyPosts';
 import { AppStateType } from '../../../redux/redux-store';
-import { PostsDataType } from '../../types/types';
+import { PostsDataType } from '../../types/ProfileType';
 
 type MapStateToPropsType = {
   postsData: Array<PostsDataType>;
