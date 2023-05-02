@@ -9,7 +9,20 @@
   font-weight: 700;
 }
 
+.paginator_search_container {
+  display: flex;
+  min-height: 120px;
+}
+
+.users__search_form {
+  display: flex;
+  justify-content: flex-end;
+  height: 100px;
+  margin: auto 20px;
+}
+
 .users__items {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-evenly;
 }

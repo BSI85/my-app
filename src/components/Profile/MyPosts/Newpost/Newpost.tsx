@@ -1,13 +1,23 @@
-import React from 'react';
-import { Field, reduxForm, reset } from 'redux-form';
+import React, { Dispatch } from 'react';
+import { Field, FormAction, InjectedFormProps, reduxForm, reset } from 'redux-form';
 import { Textarea } from '../../../Common/FormsControl/FormsControl';
 import { requiredField, maxLengthCreator } from '../../../Common/Validators/validators';
 import classes from './Newpost.module.css';
 
 const maxLength30 = maxLengthCreator(30);
 
-const Newpost = (props) => {
-  let addNewPost = (a, dispatch) => {
+type MapStateToPropsType = {};
+
+type MapDispatchToPropsType = {
+  addPost: (addNewPost: string) => void;
+};
+
+type NewPostDataType = {
+  newPostText: string;
+};
+
+const Newpost: React.FC<MapStateToPropsType & MapDispatchToPropsType> = (props) => {
+  let addNewPost = (a: NewPostDataType, dispatch: Dispatch<FormAction>) => {
     props.addPost(a.newPostText);
     dispatch(reset('newPost'));
   };
@@ -15,7 +25,7 @@ const Newpost = (props) => {
   return <NewpostFormRedux onSubmit={addNewPost} />;
 };
 
-const NewpostForm = (props) => {
+const NewpostForm: React.FC<InjectedFormProps<NewPostDataType>> = (props) => {
   return (
     <form className={classes.wrapper} onSubmit={props.handleSubmit}>
       <div className={classes.img}>
@@ -33,7 +43,7 @@ const NewpostForm = (props) => {
   );
 };
 
-const NewpostFormRedux = reduxForm({
+const NewpostFormRedux = reduxForm<NewPostDataType>({
   form: 'newPost',
 })(NewpostForm);
 

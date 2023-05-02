@@ -1,7 +1,7 @@
 import React from 'react';
 import preloader from '../../pictures/loading_wheel.gif';
 
-const Preloader = (props) => {
+const Preloader = () => {
   return (
     <div style={{ width: '100%', height: '100%', backgroundColor: 'grey', opacity: '10%' }}>
       <img

@@ -1,12 +1,12 @@
 import React, { Suspense } from 'react';
 import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
-import store from './redux/redux-store';
+import store, { AppStateType } from './redux/redux-store';
 import './App.css';
 import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
 import UsersContainer from './components/Users/UsersContainer';
-import NavbarContainer from './components/Navbar/NavbarContainer';
+import Navbar from './components/Navbar/Navbar';
 import ProfileContainer from './components/Profile/ProfileContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
 import Login from './components/Login/Login';
@@ -15,10 +15,16 @@ import { initializeApp } from './redux/app-reduser';
 import { Provider, connect } from 'react-redux';
 import { compose } from 'redux';
 import Preloader from './components/Common/Preloader';
+
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
 
-class App extends React.Component {
-  catchAllUnhandledErrors = (PromiseRejectionEvent) => {
+type MSTPType = ReturnType<typeof mapStateToProps>;
+type MDTPType = {
+  initializeApp: () => void;
+};
+
+class App extends React.Component<MSTPType & MDTPType> {
+  catchAllUnhandledErrors = () => {
     alert('Some error occured');
   };
 
@@ -40,7 +46,7 @@ class App extends React.Component {
         <div className="app_wrapper__header">
           <HeaderContainer />
         </div>
-        <div className="app_wrapper__navbar">{<NavbarContainer />}</div>
+        <div className="app_wrapper__navbar">{<Navbar />}</div>
         <div className="app_wrapper__content">
           <Routes>
             <Route path="/*" element={<Navigate to={'/profile/'} />} />
@@ -58,12 +64,7 @@ class App extends React.Component {
             <Route path="/music" element={<Music />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/login" element={<Login />} />
-            <Route
-              path="*"
-              render={() => {
-                <div>404 NOT FOUND</div>;
-              }}
-            />
+            <Route path="*" element={<div>404 NOT FOUND</div>} />
           </Routes>
         </div>
       </div>
@@ -71,18 +72,18 @@ class App extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({ initialized: state.app.initialized });
+const mapStateToProps = (state: AppStateType) => ({ initialized: state.app.initialized });
 
-export function withRouter(Children) {
-  return (props) => {
+export function withRouter(Children: any) {
+  return (props: any) => {
     const match = { params: useParams() };
     return <Children {...props} match={match} />;
   };
 }
 
-let AppContainer = compose(withRouter, connect(mapStateToProps, { initializeApp }))(App);
+let AppContainer = compose<React.ComponentType>(withRouter, connect(mapStateToProps, { initializeApp }))(App);
 
-const MyApp = (props) => {
+const MyApp: React.FC = () => {
   return (
     <HashRouter>
       <Provider store={store}>

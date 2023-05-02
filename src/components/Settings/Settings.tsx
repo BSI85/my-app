@@ -1,5 +1,5 @@
 import React from 'react';
-import { Field, reduxForm } from 'redux-form';
+import { Field, InjectedFormProps, reduxForm } from 'redux-form';
 import { Input, Textarea } from '../Common/FormsControl/FormsControl';
 import classes from './Settings.module.css';
 import { connect } from 'react-redux';
@@ -8,10 +8,36 @@ import { saveProfile } from '../../redux/profile-reducer';
 import { useNavigate } from 'react-router-dom';
 import { withAuthRedirect } from '../hoc/withAuthRedirect';
 import { compose } from 'redux';
+import { ProfileContactsType, ProfilePhotosType, ProfileType } from '../types/ProfileType';
+import { AppStateType } from '../../redux/redux-store';
 
-const Settings = (props) => {
+type MapStateToPropsType = {
+  profile: ProfileType;
+  authorizedUserId: number | null;
+  isAuth: boolean;
+};
+
+type MapDispatchToPropsType = {
+  saveProfile: (profile: ProfileType) => Promise<any>;
+};
+
+type SettingsFormDataType = {
+  userId: number;
+  aboutMe: string;
+  lookingForAJob: boolean;
+  lookingForAJobDescription: string;
+  fullName: string;
+  contacts: ProfileContactsType;
+  photos: ProfilePhotosType;
+};
+
+type ThisProfileType = {
+  profile: ProfileType;
+};
+
+const Settings: React.FC<MapStateToPropsType & MapDispatchToPropsType> = (props) => {
   const navigate = useNavigate();
-  const onSubmit = (formData) => {
+  const onSubmit = (formData: SettingsFormDataType) => {
     props.saveProfile(formData).then(() => {
       navigate('/profile');
     });
@@ -24,7 +50,7 @@ const Settings = (props) => {
   );
 };
 
-const SettingsForm = (props) => {
+const SettingsForm: React.FC<InjectedFormProps<SettingsFormDataType, ThisProfileType> & ThisProfileType> = (props) => {
   return (
     <form className={classes.form} onSubmit={props.handleSubmit}>
       <div className={classes.block}>
@@ -77,14 +103,14 @@ const SettingsForm = (props) => {
   );
 };
 
-const SettingsReduxForm = reduxForm({
+const SettingsReduxForm = reduxForm<SettingsFormDataType, ThisProfileType>({
   form: 'settings',
 })(SettingsForm);
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: AppStateType): MapStateToPropsType => ({
   profile: state.profilePage.profile,
-  authorizedUserId: state.auth.userId,
+  authorizedUserId: state.auth.id,
   isAuth: state.auth.isAuth,
 });
 
-export default compose(connect(mapStateToProps, { saveProfile }), withAuthRedirect)(Settings);
+export default compose<any>(connect(mapStateToProps, { saveProfile }), withAuthRedirect)(Settings);

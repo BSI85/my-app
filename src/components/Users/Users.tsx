@@ -3,6 +3,8 @@ import classes from './Users.module.css';
 import Paginator from '../Common/Paginator/Paginator';
 import User from './User/User';
 import { UsersDataType } from '../types/UsersDataType';
+import UserSearchForm from '../Common/UserSearchForm/UserSearchForm';
+import { FilterType } from '../../redux/users-reducer';
 
 type PropsType = {
   usersData: Array<UsersDataType>;
@@ -14,18 +16,26 @@ type PropsType = {
   followingInProgress: Array<number>;
   follow: (userId: number) => void;
   unfollow: (userId: number) => void;
+  onSearchTerm: (filter: FilterType) => void;
 };
 
 let Users: FC<PropsType> = (props) => {
   return (
     <div className={classes.users__wrapper}>
-      <div className={classes.users__header}>{props.pageTitle}</div>
-      <Paginator
-        totalUsersCount={props.totalUsersCount}
-        pageSize={props.pageSize}
-        currentPage={props.currentPage}
-        onPageChange={props.onPageChange}
-      />
+      <div className={classes.users__header}>
+        <div>{props.pageTitle}</div>
+        <div className={classes.paginator_search_container}>
+          <Paginator
+            totalUsersCount={props.totalUsersCount}
+            pageSize={props.pageSize}
+            currentPage={props.currentPage}
+            onPageChange={props.onPageChange}
+          />
+          <div className={classes.users__search_form}>
+            <UserSearchForm onSearchTerm={props.onSearchTerm} />
+          </div>
+        </div>
+      </div>
       <div className={classes.users__items}>
         {props.usersData.map((u) => (
           <User
@@ -42,19 +52,3 @@ let Users: FC<PropsType> = (props) => {
 };
 
 export default Users;
-
-//import User from './User/User';
-// let usersElement = props.usersData.map((f) => (
-//   <User
-//     key={f.id}
-//     id={f.id}
-//     name={f.name}
-//     age={f.age}
-//     online={f.online}
-//     followed={f.followed}
-//     status={f.status}
-//     country={f.location.country}
-//     city={f.location.city}
-//     avatar={f.avatar}
-//   />
-// ));

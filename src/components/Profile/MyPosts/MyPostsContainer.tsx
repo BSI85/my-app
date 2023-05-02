@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
-import MyPosts from './MyPosts';
 import { AppStateType } from '../../../redux/redux-store';
 import { PostsDataType } from '../../types/ProfileType';
+import MyPostsMemorized from './MyPosts';
 
 type MapStateToPropsType = {
   postsData: Array<PostsDataType>;
@@ -13,6 +13,6 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
   };
 };
 
-const MyPostsContainer = connect(mapStateToProps, null)(MyPosts);
+const MyPostsContainer = connect(mapStateToProps, null)(MyPostsMemorized);
 
 export default MyPostsContainer;

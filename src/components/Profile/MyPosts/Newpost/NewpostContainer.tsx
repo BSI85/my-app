@@ -7,6 +7,6 @@ type MapDispatchToPropsType = {
   addPost: (addNewPost: string) => void;
 };
 
-const NewpostContainer = connect<null, MapDispatchToPropsType, null, AppStateType>(null, { addPost })(Newpost);
+const NewpostContainer = connect<{}, MapDispatchToPropsType, {}, AppStateType>(null, { addPost })(Newpost);
 
 export default NewpostContainer;

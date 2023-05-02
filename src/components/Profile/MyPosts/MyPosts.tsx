@@ -19,4 +19,6 @@ const MyPosts: FC<MapStateToPropsType> = (props) => {
   );
 };
 
-export default MyPosts;
+const MyPostsMemorized = React.memo(MyPosts);
+
+export default MyPostsMemorized;

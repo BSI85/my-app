@@ -73,8 +73,8 @@ export function withRouter(Children: any) {
   };
 }
 
-export default compose(
-  connect<MapStateToPropsType, MapDispatchToPropsType, null, AppStateType>(mapStateToProps, {
+export default compose<any>(
+  connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, {
     getUserProfile,
     getUserStatus,
     updateUserStatus,
