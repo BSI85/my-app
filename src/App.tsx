@@ -5,7 +5,6 @@ import './App.css';
 import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
-import UsersContainer from './components/Users/UsersContainer';
 import Navbar from './components/Navbar/Navbar';
 import ProfileContainer from './components/Profile/ProfileContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
@@ -15,8 +14,10 @@ import { initializeApp } from './redux/app-reduser';
 import { Provider, connect } from 'react-redux';
 import { compose } from 'redux';
 import Preloader from './components/Common/Preloader';
+import Users from './components/Users/Users';
+import Dialogs from './components/Dialogs/Dialogs';
 
-const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
+const DialogsContainer = React.lazy(() => import('./components/Dialogs/Dialogs'));
 
 type MSTPType = ReturnType<typeof mapStateToProps>;
 type MDTPType = {
@@ -51,12 +52,12 @@ class App extends React.Component<MSTPType & MDTPType> {
           <Routes>
             <Route path="/*" element={<Navigate to={'/profile/'} />} />
             <Route path="/profile/:userId?" element={<ProfileContainer />} />
-            <Route path="/users" element={<UsersContainer pageTitle={'Users'} />} />
+            <Route path="/users/:term?/:friend?/:page?" element={<Users />} />
             <Route
               path="/dialogs/*"
               element={
                 <Suspense fallback={<Preloader />}>
-                  <DialogsContainer />
+                  <Dialogs />
                 </Suspense>
               }
             />

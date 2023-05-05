@@ -1,5 +1,3 @@
-.messages {
-}
-
 .message_item {
+  word-break: break-all;
 }

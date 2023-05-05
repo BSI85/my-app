@@ -2,6 +2,7 @@
   text-align: center;
   font-size: 18px;
   margin: 30px auto;
+  font-weight: normal;
 }
 .paginator__pages span {
   padding: 5px 10px;

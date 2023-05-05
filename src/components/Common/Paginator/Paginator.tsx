@@ -16,7 +16,9 @@ let Paginator = (props: PropsType) => {
   }
   let curPage = props.currentPage;
   let resultPages: (number | string)[] = [];
-  if (curPage < 5) {
+  if (pagesCount <= 5) {
+    resultPages = [...pages];
+  } else if (curPage < 5) {
     resultPages = [1, 2, 3, 4, 5, '...', pagesCount];
   } else if (curPage < pagesCount - 3) {
     resultPages = [1, '...', ...pages.slice(curPage - 3, curPage + 2), '...', pagesCount];

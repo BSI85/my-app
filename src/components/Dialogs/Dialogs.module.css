@@ -19,3 +19,8 @@
 .textarea_wrapper textarea::-webkit-resizer {
   display: none;
 }
+
+.errorMessage {
+  color: red;
+  font-size: 14px;
+}

@@ -18,7 +18,10 @@ const Header: React.FC<PropsType> = (props) => {
       <div className={classes.login__block}>
         {props.isAuth ? (
           <div>
-            {props.login} - <button onClick={props.logOut}>Log out</button>
+            {props.login} -{' '}
+            <button onClick={props.logOut} className={classes.button}>
+              Log out
+            </button>
           </div>
         ) : (
           <NavLink to={'/login'}>Login</NavLink>

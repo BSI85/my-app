@@ -17,6 +17,7 @@ let rootReduser = combineReducers({
 });
 
 export type AppStateType = ReturnType<typeof rootReduser>;
+export type AppDispatch = typeof store.dispatch;
 
 //@ts-ignore
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

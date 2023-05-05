@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
 import classes from './MyPosts.module.css';
 import Post from './Post/Post';
-import NewpostContainer from './Newpost/NewpostContainer';
 import { PostsDataType } from '../../types/ProfileType';
+import Newpost from './Newpost/Newpost';
 
 type MapStateToPropsType = {
   postsData: Array<PostsDataType>;
@@ -11,7 +11,7 @@ type MapStateToPropsType = {
 const MyPosts: FC<MapStateToPropsType> = (props) => {
   return (
     <div className={classes.myposts}>
-      <NewpostContainer />
+      <Newpost />
       {props.postsData.map((p) => (
         <Post key={p.id} message={p.post} likesCount={p.likes} />
       ))}

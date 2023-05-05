@@ -1,54 +1,157 @@
-import React, { FC } from 'react';
+import React, { Dispatch, FC, useEffect } from 'react';
 import classes from './Users.module.css';
 import Paginator from '../Common/Paginator/Paginator';
 import User from './User/User';
-import { UsersDataType } from '../types/UsersDataType';
-import UserSearchForm from '../Common/UserSearchForm/UserSearchForm';
-import { FilterType } from '../../redux/users-reducer';
+import UserSearchForm from './UserSearchForm/UserSearchForm';
+import { FilterType, getUsers, follow, unfollow } from '../../redux/users-reducer';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, useLocation, createSearchParams } from 'react-router-dom';
+import {
+  getCurrentPage,
+  getFilter,
+  getFollowingInProgress,
+  getIsFetching,
+  getPageSize,
+  getTotalUsersCount,
+  getUsersData,
+} from '../../redux/users-selectors';
+import Preloader from '../Common/Preloader';
 
-type PropsType = {
-  usersData: Array<UsersDataType>;
-  totalUsersCount: number;
-  pageSize: number;
-  currentPage: number;
-  pageTitle: string;
-  onPageChange: (p: number) => void;
-  followingInProgress: Array<number>;
-  follow: (userId: number) => void;
-  unfollow: (userId: number) => void;
-  onSearchTerm: (filter: FilterType) => void;
-};
+type PropsType = {};
 
-let Users: FC<PropsType> = (props) => {
+const Users: FC<PropsType> = () => {
+  const usersData = useSelector(getUsersData);
+  const pageSize = useSelector(getPageSize);
+  const totalUsersCount = useSelector(getTotalUsersCount);
+  const currentPage = useSelector(getCurrentPage);
+  const followingInProgress = useSelector(getFollowingInProgress);
+  const filter = useSelector(getFilter);
+  const isFetching = useSelector(getIsFetching);
+
+  const dispatch: Dispatch<any> = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    navigate(`/users?term=${filter.term}&friend=${filter.friend}&page=${currentPage}`);
+  }, [currentPage, pageSize, filter]);
+
+  useEffect(() => {
+    const query = new URLSearchParams(location.search);
+
+    let actualPage = currentPage;
+    let actualFilter = filter;
+
+    const queryFriend = query.get('friend');
+    const queryPage = query.get('page');
+    const queryTerm = query.get('term');
+
+    if (queryPage) actualPage = +queryPage;
+
+    if (queryTerm) actualFilter = { ...actualFilter, term: queryTerm };
+
+    switch (queryFriend) {
+      case 'null':
+        actualFilter = { ...actualFilter, friend: null };
+
+        break;
+      case 'true':
+        actualFilter = { ...actualFilter, friend: true };
+        break;
+      case 'false':
+        actualFilter = { ...actualFilter, friend: false };
+        break;
+      default:
+        break;
+    }
+    dispatch(getUsers(actualPage, pageSize, actualFilter));
+  }, [location.search]);
+
+  // useEffect(() => {
+  //   dispatch(getUsers(currentPage, pageSize, filter));
+  // }, []);
+
+  const onPageChange = (pageNumber: number) => {
+    dispatch(getUsers(pageNumber, pageSize, filter));
+  };
+  const onSearchTerm = (filter: FilterType) => {
+    dispatch(getUsers(1, pageSize, filter));
+  };
+
+  const followF = (userId: number) => {
+    dispatch(follow(userId));
+  };
+
+  const unfollowF = (userId: number) => {
+    dispatch(unfollow(userId));
+  };
+
   return (
-    <div className={classes.users__wrapper}>
-      <div className={classes.users__header}>
-        <div>{props.pageTitle}</div>
-        <div className={classes.paginator_search_container}>
-          <Paginator
-            totalUsersCount={props.totalUsersCount}
-            pageSize={props.pageSize}
-            currentPage={props.currentPage}
-            onPageChange={props.onPageChange}
-          />
-          <div className={classes.users__search_form}>
-            <UserSearchForm onSearchTerm={props.onSearchTerm} />
+    <div>
+      {isFetching ? (
+        <Preloader />
+      ) : (
+        <div className={classes.users__wrapper}>
+          <div className={classes.users__header}>
+            <div>Users</div>
+            <div className={classes.paginator_search_container}>
+              <Paginator
+                totalUsersCount={totalUsersCount}
+                pageSize={pageSize}
+                currentPage={currentPage}
+                onPageChange={onPageChange}
+              />
+              <div className={classes.users__search_form}>
+                <UserSearchForm onSearchTerm={onSearchTerm} />
+              </div>
+            </div>
+          </div>
+          <div className={classes.users__items}>
+            {usersData.map((u) => (
+              <User
+                user={u}
+                key={u.id}
+                followingInProgress={followingInProgress}
+                follow={followF}
+                unfollow={unfollowF}
+              />
+            ))}
           </div>
         </div>
-      </div>
-      <div className={classes.users__items}>
-        {props.usersData.map((u) => (
-          <User
-            user={u}
-            key={u.id}
-            followingInProgress={props.followingInProgress}
-            follow={props.follow}
-            unfollow={props.unfollow}
-          />
-        ))}
-      </div>
+      )}
     </div>
   );
 };
 
 export default Users;
+
+// useEffect(() => {
+//   const query = new URLSearchParams(location.search);
+
+//   let actualPage = currentPage;
+//   let actualFilter = filter;
+
+//   const queryFriend = query.get('friend');
+//   const queryPage = query.get('page');
+//   const queryTerm = query.get('term');
+
+//   if (queryPage) actualPage = +queryPage;
+
+//   if (queryTerm) actualFilter = { ...actualFilter, term: queryTerm };
+
+//   switch (queryFriend) {
+//     case 'null':
+//       actualFilter = { ...actualFilter, friend: null };
+
+//       break;
+//     case 'true':
+//       actualFilter = { ...actualFilter, friend: true };
+//       break;
+//     case 'false':
+//       actualFilter = { ...actualFilter, friend: false };
+//       break;
+//     default:
+//       break;
+//   }
+//   dispatch(getUsers(actualPage, pageSize, actualFilter));
+// }, [location.search]);

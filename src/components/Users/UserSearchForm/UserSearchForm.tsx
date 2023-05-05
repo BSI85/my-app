@@ -3,14 +3,14 @@ import classes from './UserSearchForm.module.css';
 import React from 'react';
 import { FilterType } from '../../../redux/users-reducer';
 
-interface FormValues {
+type FormValues = {
   term: string;
   friend: null | boolean;
-}
+};
 
-interface PropsType {
+type PropsType = {
   onSearchTerm: (filter: FilterType) => void;
-}
+};
 
 const UserSearchForm: React.FC<PropsType> = (props) => {
   return (
@@ -26,6 +26,7 @@ const UserSearchForm: React.FC<PropsType> = (props) => {
         }}
         onSubmit={(values, { setSubmitting }) => {
           props.onSearchTerm(values);
+
           setSubmitting(false);
         }}
       >
