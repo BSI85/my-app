@@ -29,6 +29,11 @@ class Navbar extends React.Component {
           </NavLink>
         </div>
         <div className={classes.item_box}>
+          <NavLink to="/github" className={this.aIa}>
+            GitHub
+          </NavLink>
+        </div>
+        <div className={classes.item_box}>
           <NavLink to="/music" className={this.aIa}>
             Music
           </NavLink>

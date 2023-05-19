@@ -53,13 +53,19 @@ const ProfileInfo: FC<PropsType> = (props) => {
               <span>Looking for a job:</span> {props.profile.lookingForAJobDescription}
             </p>
           )}
-          <p className={classes.info}>
+          <div className={classes.info}>
             <span>Contacts:</span>{' '}
-            {Object.keys(props.profile.contacts).map((key) => {
-              if (props.profile.contacts[key as contactsKeyType])
-                return <Contact contactTitle={key} contactValue={props.profile.contacts[key as contactsKeyType]} />;
+            {Object.keys(props.profile.contacts).map((keys) => {
+              if (props.profile.contacts[keys as contactsKeyType])
+                return (
+                  <Contact
+                    contactTitle={keys}
+                    contactValue={props.profile.contacts[keys as contactsKeyType]}
+                    key={keys}
+                  />
+                );
             })}
-          </p>
+          </div>
         </div>
       </div>
     );
@@ -68,12 +74,13 @@ const ProfileInfo: FC<PropsType> = (props) => {
 type PropsTypeContact = {
   contactTitle: string;
   contactValue: string;
+  key: string;
 };
 
-export const Contact: FC<PropsTypeContact> = ({ contactTitle, contactValue }) => {
+export const Contact: FC<PropsTypeContact> = (props) => {
   return (
-    <div className={classes.contacts}>
-      <span>{contactTitle}:</span> {contactValue}
+    <div className={classes.contacts} key={props.key}>
+      <span>{props.contactTitle}:</span> {props.contactValue}
     </div>
   );
 };

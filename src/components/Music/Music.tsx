@@ -1,9 +1,13 @@
 import React from 'react';
+import { Button } from 'antd';
 
-class Music extends React.Component {
-  render() {
-    return <div>Music</div>;
-  }
-}
+const Music = () => {
+  return (
+    <div>
+      Music
+      <Button type="primary">Play</Button>
+    </div>
+  );
+};
 
 export default Music;

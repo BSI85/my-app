@@ -33,7 +33,7 @@ const FormikForm: React.FC<FormikPropsType> = (props) => (
         }
         return errors;
       }}
-      onSubmit={(values, { setSubmitting, resetForm }) => {
+      onSubmit={(values, { setSubmitting, resetForm, setStatus }) => {
         props.onSubmit(values);
         resetForm();
         setSubmitting(false);

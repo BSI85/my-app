@@ -1,0 +1,33 @@
+.wrapper {
+  display: flex;
+  margin: 10px auto 5px;
+  /* border: 1px dashed #3073e5; */
+  background-color: #c7d9f8;
+  border-radius: 4px;
+  min-height: 75px;
+}
+
+.autor {
+  margin: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+}
+
+.messageText {
+  border-radius: 4px;
+  background-color: #ffffff;
+  padding: 5px;
+  margin: 5px 2px;
+  width: 100%;
+}
+
+.userName {
+  font-weight: 700;
+  text-align: center;
+  overflow: hidden;
+  word-break: break-word;
+  margin-top: 5px;
+}

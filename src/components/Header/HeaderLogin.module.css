@@ -1,0 +1,10 @@
+.login__block {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.logout {
+  color: white;
+  font-size: 18px;
+}

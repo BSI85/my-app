@@ -1,0 +1,37 @@
+.container {
+  display: flex;
+  justify-content: space-around;
+  margin: 20px;
+}
+
+.input {
+  width: 150px;
+  margin: 20px;
+}
+
+.ul {
+  margin: 5px;
+}
+
+.li {
+  padding: 5px;
+}
+
+.selectedUser {
+  background-color: aqua;
+}
+
+.li:hover {
+  cursor: pointer;
+}
+
+.h2 {
+  margin: 20px auto;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.details > div {
+  margin: 10px auto;
+  font-size: 16px;
+}
