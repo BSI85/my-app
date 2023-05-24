@@ -1,3 +1,24 @@
 .myposts {
   border: 2px solid teal;
 }
+
+.item {
+  background-color: blue;
+  width: 90%;
+}
+.like {
+  color: darkgreen;
+}
+
+.like button {
+  font-weight: 700;
+  padding: 2px 7px;
+}
+
+.wrapper {
+  display: flex;
+  margin: 10px auto;
+}
+.img {
+  margin: 0 10px;
+}

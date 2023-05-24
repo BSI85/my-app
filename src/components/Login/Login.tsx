@@ -4,7 +4,7 @@ import classes from './Login.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { logIn } from '../../redux/auth-reduser';
 import { Navigate } from 'react-router-dom';
-import { AppStateType } from '../../redux/redux-store';
+import { getCaptchaUrl, getIsAuth } from '../../redux/Selectors/auth-selectors';
 
 type FormValues = {
   email: string;
@@ -19,8 +19,8 @@ type PropsType = {
 };
 
 const Login: React.FC = () => {
-  const captchaUrl = useSelector((state: AppStateType) => state.auth.captchaUrl);
-  const isAuth = useSelector((state: AppStateType) => state.auth.isAuth);
+  const captchaUrl = useSelector(getCaptchaUrl);
+  const isAuth = useSelector(getIsAuth);
   const dispatch: Dispatch<any> = useDispatch();
   const onSubmit = (values: FormValues) => {
     dispatch(logIn(values.email, values.password, values.rememberMe, values.captchaUrl));

@@ -5,7 +5,7 @@ import classes from './App.module.css';
 import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
-import ProfileContainer from './components/Profile/ProfileContainer';
+
 import Login from './components/Login/Login';
 import { useParams } from 'react-router-dom';
 import { initializeApp } from './redux/app-reduser';
@@ -18,6 +18,7 @@ import { Breadcrumb, Col, Layout, Menu, Row, theme } from 'antd';
 import { items } from './components/Common/Other/menuItems';
 import HeaderLogin from './components/Header/HeaderLogin';
 import GitHub from './components/GitHub/GitHub';
+import Profile from './components/Profile/Profile';
 
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/Dialogs'));
 const ChatPageContainer = React.lazy(() => import('./components/pages/Chat/ChatPage'));
@@ -77,7 +78,7 @@ const App: React.FC<MSTPType & MDTPType> = (props) => {
             <Content style={{ padding: '0 24px', minHeight: '70vh' }}>
               <Routes>
                 <Route path="/*" element={<Navigate to={'/profile/'} />} />
-                <Route path="/profile/:userId?" element={<ProfileContainer />} />
+                <Route path="/profile/:userId?" element={<Profile />} />
                 <Route path="/users/:term?/:friend?/:page?" element={<Users />} />
                 <Route
                   path="/dialogs/*"

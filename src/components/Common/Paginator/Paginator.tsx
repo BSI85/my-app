@@ -36,6 +36,7 @@ let Paginator = (props: PropsType) => {
               onClick={(e) => {
                 props.onPageChange(p);
               }}
+              key={p}
             >
               {p}
             </span>

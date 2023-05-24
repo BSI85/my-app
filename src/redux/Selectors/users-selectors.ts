@@ -1,4 +1,4 @@
-import { AppStateType } from './redux-store';
+import { AppStateType } from '../redux-store';
 
 export const getUsersData = (state: AppStateType) => {
   return state.usersPage.usersData;

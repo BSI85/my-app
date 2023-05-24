@@ -1,20 +1,41 @@
 import React, { FC } from 'react';
 import classes from './MyPosts.module.css';
-import Post from './Post/Post';
-import { PostsDataType } from '../../types/ProfileType';
 import Newpost from './Newpost/Newpost';
+import { useSelector } from 'react-redux';
+import { getPostsData } from '../../../redux/Selectors/profile-selectors';
+import { Avatar } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
 
-type MapStateToPropsType = {
-  postsData: Array<PostsDataType>;
-};
+const MyPosts: FC = () => {
+  let postsData = useSelector(getPostsData);
 
-const MyPosts: FC<MapStateToPropsType> = (props) => {
   return (
     <div className={classes.myposts}>
       <Newpost />
-      {props.postsData.map((p) => (
+      {postsData.map((p) => (
         <Post key={p.id} message={p.post} likesCount={p.likes} />
       ))}
+    </div>
+  );
+};
+
+type PropsType = {
+  message: string;
+  likesCount: number;
+};
+
+const Post: FC<PropsType> = (props) => {
+  return (
+    <div>
+      <div className={classes.wrapper}>
+        <div className={classes.img}>
+          <Avatar size={48} icon={<UserOutlined />} />
+        </div>
+        <div className={classes.item}>{props.message}</div>
+      </div>
+      <div className={classes.like}>
+        <button>Like {props.likesCount}</button>
+      </div>
     </div>
   );
 };

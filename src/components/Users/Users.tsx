@@ -5,7 +5,7 @@ import User from './User/User';
 import UserSearchForm from './UserSearchForm/UserSearchForm';
 import { FilterType, getUsers, follow, unfollow } from '../../redux/users-reducer';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useLocation, createSearchParams } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import {
   getCurrentPage,
   getFilter,
@@ -14,7 +14,7 @@ import {
   getPageSize,
   getTotalUsersCount,
   getUsersData,
-} from '../../redux/users-selectors';
+} from '../../redux/Selectors/users-selectors';
 import Preloader from '../Common/Preloader';
 
 type PropsType = {};

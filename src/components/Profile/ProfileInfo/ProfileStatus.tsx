@@ -1,19 +1,23 @@
-import React, { useState, useEffect, FC, ChangeEvent, DetailedHTMLProps, HTMLAttributes } from 'react';
+import React, { useState, useEffect, FC, ChangeEvent } from 'react';
 import classes from './ProfileStatus.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { getStatus } from '../../../redux/Selectors/profile-selectors';
+import { Dispatch } from 'redux';
+import { updateUserStatus } from '../../../redux/profile-reducer';
+import { useParams } from 'react-router-dom';
 
-type PropsType = {
-  status: string;
-  updateUserStatus: (status: string) => void;
-  isOwner: boolean;
-};
+const ProfileStatus: FC = () => {
+  let status = useSelector(getStatus);
+  let dispatch: Dispatch<any> = useDispatch();
+  let params = useParams();
+  let isOwner = !params.userId;
 
-const ProfileStatus: FC<PropsType> = (props) => {
   let [editMode, setEditMode] = useState(false);
-  let [status, setStatus] = useState(props.status);
+  let [localStatus, setLocalStatus] = useState(status);
 
   useEffect(() => {
-    setStatus(props.status);
-  }, [props.status]);
+    setLocalStatus(status);
+  }, [status]);
 
   const activateEditMode = () => {
     setEditMode(true);
@@ -21,20 +25,18 @@ const ProfileStatus: FC<PropsType> = (props) => {
 
   const deactivateEditMode = () => {
     setEditMode(false);
-    props.updateUserStatus(status);
+    dispatch(updateUserStatus(localStatus));
   };
 
   const onStatusChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setStatus(e.currentTarget.value);
+    setLocalStatus(e.currentTarget.value);
   };
 
   return (
     <div className={classes.status}>
       {!editMode ? (
         <div>
-          <span onDoubleClick={props.isOwner ? activateEditMode : undefined}>
-            {props.status || 'Введите Ваш статус'}
-          </span>
+          <span onDoubleClick={isOwner ? activateEditMode : undefined}>{status || 'Введите Ваш статус'}</span>
         </div>
       ) : (
         <div>
@@ -43,7 +45,7 @@ const ProfileStatus: FC<PropsType> = (props) => {
             onChange={onStatusChange}
             autoFocus={true}
             onBlur={deactivateEditMode}
-            value={status}
+            value={localStatus}
             maxLength={300}
           />
         </div>

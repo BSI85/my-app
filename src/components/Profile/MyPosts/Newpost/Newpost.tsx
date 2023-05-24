@@ -3,6 +3,8 @@ import classes from './Newpost.module.css';
 import { Formik, Form, Field, ErrorMessage, FormikErrors } from 'formik';
 import { useDispatch } from 'react-redux';
 import { addPost } from '../../../../redux/profile-reducer';
+import { UserOutlined } from '@ant-design/icons';
+import { Avatar } from 'antd';
 
 type FormValues = {
   newPostText: string;
@@ -33,7 +35,7 @@ const FormikForm: React.FC<FormikPropsType> = (props) => (
         }
         return errors;
       }}
-      onSubmit={(values, { setSubmitting, resetForm, setStatus }) => {
+      onSubmit={(values, { setSubmitting, resetForm }) => {
         props.onSubmit(values);
         resetForm();
         setSubmitting(false);
@@ -43,7 +45,7 @@ const FormikForm: React.FC<FormikPropsType> = (props) => (
         <Form>
           <div className={classes.wrapper}>
             <div className={classes.img}>
-              <img src={require('./icons8-customer-50.png')} alt="" />
+              <Avatar size={48} icon={<UserOutlined />} />
             </div>
             <div className={classes.text}>
               <Field type="text" name="newPostText" placeholder="Write something..." />
@@ -60,27 +62,5 @@ const FormikForm: React.FC<FormikPropsType> = (props) => (
     </Formik>
   </div>
 );
-
-// const NewpostForm: React.FC<InjectedFormProps<NewPostDataType>> = (props) => {
-//   return (
-//     <form className={classes.wrapper} onSubmit={props.handleSubmit}>
-//       <div className={classes.img}>
-//         <img src={require('./icons8-customer-50.png')} alt="" />
-//       </div>
-//       <Field
-//         className={classes.field_ins}
-//         component={Textarea}
-//         name="newPostText"
-//         placeholder="Write something..."
-//         validate={[requiredField, maxLength30]}
-//       ></Field>
-//       <button className={classes.button}>Send message</button>
-//     </form>
-//   );
-// };
-
-// const NewpostFormRedux = reduxForm<NewPostDataType>({
-//   form: 'newPost',
-// })(NewpostForm);
 
 export default Newpost;
