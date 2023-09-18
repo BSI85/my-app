@@ -2,11 +2,12 @@ import React, { FC, useEffect } from 'react';
 import classes from './Profile.module.css';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 import { Navigate, useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { Dispatch } from 'redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
+import { Dispatch, compose } from 'redux';
 import { getUserProfile, getUserStatus } from '../../redux/profile-reducer';
 import MyPostsMemorized from './MyPosts/MyPosts';
 import { getAuthorizedUserId, getIsAuth } from '../../redux/Selectors/auth-selectors';
+import { withAuthRedirect } from '../hoc/withAuthRedirect';
 
 const Profile: FC = () => {
   let dispatch: Dispatch<any> = useDispatch();
@@ -40,4 +41,4 @@ const Profile: FC = () => {
   );
 };
 
-export default Profile;
+export default compose<any>(connect(null, {}), withAuthRedirect)(Profile);

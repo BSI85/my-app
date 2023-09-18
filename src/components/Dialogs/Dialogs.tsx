@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
 import classes from './Dialogs.module.css';
 import DialogItem from './DialogItem/DialogItem';
-import { useDispatch, useSelector } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { getDialogsData } from '../../redux/Selectors/dialogs-selectors';
+import { withAuthRedirect } from '../hoc/withAuthRedirect';
 import Messages from './Messages/Messages';
 import { Route, Routes } from 'react-router-dom';
 import { setDialogsData } from '../../redux/dialogs-reducer';
-import { Dispatch } from 'redux';
+import { Dispatch, compose } from 'redux';
 
 const Dialogs: React.FC = () => {
   const dialogsData = useSelector(getDialogsData);
@@ -32,4 +33,4 @@ const Dialogs: React.FC = () => {
   );
 };
 
-export default Dialogs;
+export default compose<any>(connect(null, {}), withAuthRedirect)(Dialogs);

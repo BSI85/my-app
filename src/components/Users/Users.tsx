@@ -2,7 +2,6 @@ import React, { Dispatch, FC, useEffect } from 'react';
 import classes from './Users.module.css';
 import Paginator from '../Common/Paginator/Paginator';
 import User from './User/User';
-import UserSearchForm from './UserSearchForm/UserSearchForm';
 import { FilterType, getUsers, follow, unfollow } from '../../redux/users-reducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -17,6 +16,7 @@ import {
 } from '../../redux/Selectors/users-selectors';
 import Preloader from '../Common/Preloader';
 import { startNewDialog } from '../../redux/dialogs-reducer';
+import UserSearchForm from './UserSearchForm/UserSearchForm';
 
 type PropsType = {};
 
@@ -66,11 +66,7 @@ const Users: FC<PropsType> = () => {
         break;
     }
     dispatch(getUsers(actualPage, pageSize, actualFilter));
-  }, [location.search]);
-
-  // useEffect(() => {
-  //   dispatch(getUsers(currentPage, pageSize, filter));
-  // }, []);
+  }, []);
 
   const onPageChange = (pageNumber: number) => {
     dispatch(getUsers(pageNumber, pageSize, filter));
