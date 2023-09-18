@@ -3,10 +3,10 @@ import classes from './Profile.module.css';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 import { Navigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppStateType } from '../../redux/redux-store';
 import { Dispatch } from 'redux';
 import { getUserProfile, getUserStatus } from '../../redux/profile-reducer';
 import MyPostsMemorized from './MyPosts/MyPosts';
+import { getAuthorizedUserId, getIsAuth } from '../../redux/Selectors/auth-selectors';
 
 const Profile: FC = () => {
   let dispatch: Dispatch<any> = useDispatch();
@@ -28,8 +28,8 @@ const Profile: FC = () => {
     refreshProfile();
   }, [params.userId]);
 
-  const isAuth = useSelector((state: AppStateType) => state.auth.isAuth);
-  const authorizedUserId = useSelector((state: AppStateType) => state.auth.id);
+  const isAuth = useSelector(getIsAuth);
+  const authorizedUserId = useSelector(getAuthorizedUserId);
 
   if (!isAuth) return <Navigate to={'/login'} />;
   return (

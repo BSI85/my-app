@@ -1,24 +1,16 @@
 import { ThunkAction } from 'redux-thunk';
 import { AppStateType } from './redux-store';
 import { InferActionsTypes } from '../components/types/types';
+import { DialogsDataType, MessagesDataType } from '../components/types/DialogsType';
+import { dialogsAPI } from '../components/api/dialogsAPI';
 
-const SEND_MESSAGE = 'my-app/dialogs/SEND-MESSAGE';
+const SET_MESSAGES_DATA = 'my-app/dialogs/SET_MESSAGES_DATA';
+const SET_DIALOGS_DATA = 'my-app/dialogs/SET_DIALOGS_DATA';
+const UPDATE_MESSAGES_DATA = 'my-app/dialogs/UPDATE_MESSAGES_DATA';
 
 let initialState = {
-  dialogsData: [
-    { id: 2, name: 'Prol' },
-    { id: 4, name: 'Snezhana' },
-    { id: 5, name: 'Balamut' },
-    { id: 7, name: 'Valera' },
-  ],
-
-  messagesData: [
-    { id: 11, message: 'Hello' },
-    { id: 12, message: 'What you doing?' },
-    { id: 13, message: 'Where are you?' },
-    { id: 24, message: 'Hello!' },
-    { id: 15, message: 'Valera, nastalo twoe vremya' },
-  ],
+  dialogsData: [] as Array<DialogsDataType>,
+  messagesData: {} as MessagesDataType,
 };
 
 type InitialStateType = typeof initialState;
@@ -26,12 +18,35 @@ type DialogsActionsType = InferActionsTypes<typeof dialogsActions>;
 
 const dialogsReducer = (state = initialState, action: DialogsActionsType): InitialStateType => {
   switch (action.type) {
-    case SEND_MESSAGE: {
+    case SET_DIALOGS_DATA: {
       return {
         ...state,
-        messagesData: [...state.messagesData, { id: state.messagesData.length + 1, message: action.addNewMessage }],
+        dialogsData: action.dialogsData,
       };
     }
+    case SET_MESSAGES_DATA: {
+      return {
+        ...state,
+        messagesData: action.messagesData,
+      };
+    }
+    // case UPDATE_MESSAGES_DATA: {
+    //   return {
+    //     ...state,
+    //     messagesData: action.messagesData,
+    //   };
+    // }
+
+    // case SEND_MESSAGE: {
+    //   return {
+    //     ...state,
+    //     messagesData: [
+    //       ...state.messagesData,
+    //       { messageId: state.messagesData.length + 1, message: action.addNewMessage },
+    //     ],
+    //   };
+    // }
+
     default:
       return state;
   }
@@ -40,14 +55,57 @@ const dialogsReducer = (state = initialState, action: DialogsActionsType): Initi
 //Action creators:
 
 const dialogsActions = {
-  sendMessageCreator: (addNewMessage: string) => ({ type: SEND_MESSAGE, addNewMessage } as const),
+  setDialogsCreator: (dialogsData: Array<DialogsDataType>) => ({ type: SET_DIALOGS_DATA, dialogsData } as const),
+  setMessagesCreator: (messagesData: MessagesDataType) => ({ type: SET_MESSAGES_DATA, messagesData } as const),
+  // updateMessagesCreator: ()
 };
 
 //Thunk Thunk Thunk
 
-export const sendMessage = (addNewMessage: string): ThunkAction<void, AppStateType, unknown, DialogsActionsType> => {
-  return (dispatch) => {
-    dispatch(dialogsActions.sendMessageCreator(addNewMessage));
+type DialogsThunkType = ThunkAction<Promise<void>, AppStateType, unknown, DialogsActionsType>;
+
+export const startNewDialog = (id: number): ThunkAction<void, AppStateType, unknown, DialogsActionsType> => {
+  return async (dispatch) => {
+    dialogsAPI.startDialog(id);
+    let data = await dialogsAPI.getDialogs();
+    dispatch(dialogsActions.setDialogsCreator(data));
+  };
+};
+
+export const setUsersMessagesData = (id: number): ThunkAction<void, AppStateType, unknown, DialogsActionsType> => {
+  return async (dispatch) => {
+    let data = await dialogsAPI.getDialogMessages(id, 1, 10);
+    dispatch(dialogsActions.setMessagesCreator(data));
+  };
+};
+
+export const setDialogsData = (): ThunkAction<void, AppStateType, unknown, DialogsActionsType> => {
+  return async (dispatch) => {
+    let data = await dialogsAPI.getDialogs();
+    dispatch(dialogsActions.setDialogsCreator(data));
+  };
+};
+
+export const sendMessage = (userId: number, body: string): DialogsThunkType => {
+  return async (dispatch) => {
+    const data = await dialogsAPI.sendMessage(userId, body);
+    if (data.resultCode === 0) {
+      const dataM = await dialogsAPI.getDialogMessages(userId, 1, 10);
+      dispatch(dialogsActions.setMessagesCreator(dataM));
+    }
+  };
+};
+
+export const deleteMessage = (
+  id: number,
+  dialogUserId: number
+): ThunkAction<void, AppStateType, unknown, DialogsActionsType> => {
+  return async (dispatch) => {
+    let data = await dialogsAPI.deleteMessage(id);
+    if (data.resultCode === 0) {
+      const dataM = await dialogsAPI.getDialogMessages(dialogUserId, 1, 10);
+      dispatch(dialogsActions.setMessagesCreator(dataM));
+    }
   };
 };
 

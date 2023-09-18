@@ -7,6 +7,7 @@ import thunkMiddleware from 'redux-thunk';
 import { reducer as formReducer } from 'redux-form';
 import appReducer from './app-reduser';
 import chatReducer from './chat-reduser';
+import { useDispatch } from 'react-redux';
 
 let rootReduser = combineReducers({
   profilePage: profileReducer,

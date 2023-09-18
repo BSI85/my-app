@@ -37,3 +37,8 @@
   font-size: 14px;
   margin: 10px auto;
 }
+
+.input {
+  border: 1px dotted #6969e8;
+  border-radius: 4px;
+}

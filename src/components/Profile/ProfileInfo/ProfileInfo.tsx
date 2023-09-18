@@ -52,10 +52,10 @@ const ProfileInfo: FC = () => {
           )}
           <div className={classes.info}>
             <span>Contacts:</span>{' '}
-            {Object.keys(profile.contacts).map((keys) => {
+            {Object.keys(profile.contacts).map((keys, index) => {
               if (profile.contacts[keys as contactsKeyType])
                 return (
-                  <div className={classes.contacts}>
+                  <div className={classes.contacts} key={index}>
                     <span>{keys}:</span> {profile.contacts[keys as contactsKeyType]}
                   </div>
                 );

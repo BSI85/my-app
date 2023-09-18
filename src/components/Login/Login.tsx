@@ -61,11 +61,11 @@ const FormikForm: React.FC<PropsType> = (props) => (
       {({ isSubmitting }) => (
         <Form className={classes.login__form}>
           <div className={classes.login__login}>
-            <Field type="email" name="email" placeholder="Enter your email" />
+            <Field className={classes.input} type="email" name="email" placeholder="Enter your email" />
           </div>
           <ErrorMessage name="email" component="div" className={classes.errorMessage} />
           <div className={classes.login__password}>
-            <Field type="password" name="password" placeholder="Enter your password" />
+            <Field className={classes.input} type="password" name="password" placeholder="Enter your password" />
           </div>
           <ErrorMessage name="password" component="div" className={classes.errorMessage} />
           <div>

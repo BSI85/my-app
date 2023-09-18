@@ -19,8 +19,8 @@ import { items } from './components/Common/Other/menuItems';
 import HeaderLogin from './components/Header/HeaderLogin';
 import GitHub from './components/GitHub/GitHub';
 import Profile from './components/Profile/Profile';
+import Dialogs from './components/Dialogs/Dialogs';
 
-const DialogsContainer = React.lazy(() => import('./components/Dialogs/Dialogs'));
 const ChatPageContainer = React.lazy(() => import('./components/pages/Chat/ChatPage'));
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -80,14 +80,7 @@ const App: React.FC<MSTPType & MDTPType> = (props) => {
                 <Route path="/*" element={<Navigate to={'/profile/'} />} />
                 <Route path="/profile/:userId?" element={<Profile />} />
                 <Route path="/users/:term?/:friend?/:page?" element={<Users />} />
-                <Route
-                  path="/dialogs/*"
-                  element={
-                    <Suspense fallback={<Preloader />}>
-                      <DialogsContainer />
-                    </Suspense>
-                  }
-                />
+                <Route path="/dialogs/*" element={<Dialogs />} />
                 <Route
                   path="/chat/*"
                   element={

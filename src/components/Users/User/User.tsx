@@ -3,12 +3,15 @@ import classes from './User.module.css';
 import userPhoto from '../../../pictures/default_avatar.png';
 import { NavLink } from 'react-router-dom';
 import { UsersDataType } from '../../types/UsersDataType';
+import { Button } from 'antd';
+import { SendOutlined, UserAddOutlined } from '@ant-design/icons';
 
 type PropsType = {
   user: UsersDataType;
   followingInProgress: Array<number>;
   follow: (userId: number) => void;
   unfollow: (userId: number) => void;
+  addUserToDialogs: (id: number) => void;
 };
 
 const User: FC<PropsType> = (props) => {
@@ -24,34 +27,50 @@ const User: FC<PropsType> = (props) => {
           <NavLink to={'/profile/' + props.user.id}>
             <img src={props.user.photos.small != null ? props.user.photos.small : userPhoto} alt="avatar" />
           </NavLink>
-          {/* <img src={require(`../../../pictures/user_${props.user.id}.png`)} alt="avatar" /> */}
         </div>
         <div className={classes.info}>
           <div className={classes.name__age}>{props.user.name}</div>
-          <div className={classes.country__city}>
-            {'props.user.location.country'}, {'props.user.location.city'}
-          </div>
-          <div className={classes.button}>
+          <div className={classes.button_wrapper}>
             {props.user.followed ? (
-              <button
+              <Button
+                icon={<UserAddOutlined />}
+                className={classes.button_FuF}
+                loading={props.followingInProgress.some((id) => id === props.user.id)}
                 disabled={props.followingInProgress.some((id) => id === props.user.id)}
                 onClick={() => {
                   props.unfollow(props.user.id);
                 }}
+                size="small"
               >
                 Unfollow
-              </button>
+              </Button>
             ) : (
-              <button
+              <Button
+                icon={<UserAddOutlined />}
+                className={classes.button_FuF}
+                loading={props.followingInProgress.some((id) => id === props.user.id)}
                 disabled={props.followingInProgress.some((id) => id === props.user.id)}
                 onClick={() => {
                   props.follow(props.user.id);
                 }}
+                size="small"
               >
                 Follow
-              </button>
+              </Button>
             )}
+            <Button
+              className={classes.button_FuF}
+              onClick={() => {
+                props.addUserToDialogs(props.user.id);
+              }}
+              size="small"
+              icon={<SendOutlined />}
+            >
+              Send
+            </Button>
           </div>
+
+          <div className={classes.button_wrapper}></div>
         </div>
       </div>
     </div>

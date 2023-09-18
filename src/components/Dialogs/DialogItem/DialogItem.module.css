@@ -1,7 +1,14 @@
-.link {
+/* .link {
   color: blue;
-}
+} */
 
 .activeLink {
-  color: gold;
+  font-weight: bold;
+}
+
+.avatar {
+  margin: 5px;
+}
+.name {
+  font-size: 18px;
 }

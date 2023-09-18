@@ -1,75 +1,35 @@
-import React, { Dispatch } from 'react';
+import React, { useEffect } from 'react';
 import classes from './Dialogs.module.css';
-import Message from './Message/Message';
 import DialogItem from './DialogItem/DialogItem';
-import { Formik, Form, Field, ErrorMessage, FormikErrors } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppStateType } from '../../redux/redux-store';
-import { sendMessage } from '../../redux/dialogs-reducer';
-
-type FormValues = {
-  newMessageBody: string;
-};
-type FormikPropsType = {
-  onSubmit: (values: FormValues) => void;
-};
+import { getDialogsData } from '../../redux/Selectors/dialogs-selectors';
+import Messages from './Messages/Messages';
+import { Route, Routes } from 'react-router-dom';
+import { setDialogsData } from '../../redux/dialogs-reducer';
+import { Dispatch } from 'redux';
 
 const Dialogs: React.FC = () => {
-  const dialogsData = useSelector((state: AppStateType) => state.dialogsPage.dialogsData);
-  const messagesData = useSelector((state: AppStateType) => state.dialogsPage.messagesData);
-
+  const dialogsData = useSelector(getDialogsData);
   const dispatch: Dispatch<any> = useDispatch();
-  const onSubmit = (values: FormValues) => {
-    dispatch(sendMessage(values.newMessageBody));
-  };
+  useEffect(() => {
+    dispatch(setDialogsData());
+  }, []);
 
-  let dialogsElements = dialogsData.map((d) => <DialogItem key={d.id} name={d.name} id={d.id} />);
-  let messagesElements = messagesData.map((m) => <Message key={m.id} message={m.message} />);
+  let dialogsElements = dialogsData.map((d) => (
+    <DialogItem key={d.id} name={d.userName} id={d.id} avatar={d.photos.small} />
+  ));
 
   return (
     <div className={classes.dialogs}>
       <div className={classes.dialogs_block}>{dialogsElements}</div>
       <div className={classes.messages_block}>
-        <div className={classes.messages}>{messagesElements}</div>
-        <div className={classes.sendarea}>
-          <FormikForm onSubmit={onSubmit} />
-        </div>
+        <Routes>
+          <Route path="/:dialogID?" element={<Messages />} />
+        </Routes>
+        <div className={classes.sendarea}></div>
       </div>
     </div>
   );
 };
-
-const FormikForm: React.FC<FormikPropsType> = (props) => (
-  <div>
-    <Formik
-      initialValues={{ newMessageBody: '' }}
-      validate={(values: FormValues) => {
-        const errors: FormikErrors<FormValues> = {};
-        if (values.newMessageBody.length > 100) {
-          errors.newMessageBody = 'Your message is to long';
-        }
-        return errors;
-      }}
-      onSubmit={(values, { setSubmitting, resetForm }) => {
-        props.onSubmit(values);
-        resetForm();
-        setSubmitting(false);
-      }}
-    >
-      {({ isSubmitting }) => (
-        <Form className={classes.textarea_wrapper}>
-          <div className={classes.textarea}>
-            <Field type="text" name="newMessageBody" />
-          </div>
-          <ErrorMessage name="newMessageBody" component="div" className={classes.errorMessage} />
-
-          <button type="submit" disabled={isSubmitting}>
-            Submit
-          </button>
-        </Form>
-      )}
-    </Formik>
-  </div>
-);
 
 export default Dialogs;

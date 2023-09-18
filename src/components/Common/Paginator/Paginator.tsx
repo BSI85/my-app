@@ -42,7 +42,7 @@ let Paginator = (props: PropsType) => {
             </span>
           );
         } else {
-          return <span>{p}</span>;
+          return <span key={p}>{p}</span>;
         }
       })}
     </div>

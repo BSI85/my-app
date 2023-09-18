@@ -44,3 +44,8 @@
   box-shadow: 1px 2px darkslategrey;
   border-radius: 2px;
 }
+
+.input {
+  border: 1px dotted #6969e8;
+  border-radius: 4px;
+}

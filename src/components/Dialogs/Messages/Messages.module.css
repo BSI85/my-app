@@ -1,0 +1,33 @@
+.messages_block {
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.messages_items {
+  background-color: #fff;
+  border: 1px solid #1677ff;
+  flex: 1 0 auto;
+  overflow-y: scroll;
+  max-height: 300px;
+}
+
+.messages_item {
+  margin: 15px;
+  border: 1px solid #1677ff;
+  border-radius: 5px;
+}
+
+.item_text {
+  padding: 3px 7px;
+}
+
+.item_time {
+  font-size: 10px;
+  text-align: right;
+  padding: 0 4px;
+}
+
+.viewed {
+  background-color: #aecffe;
+}

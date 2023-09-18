@@ -66,26 +66,31 @@
   margin: 10px 5px;
 }
 
-.button {
+.button_wrapper {
+  display: flex;
   text-align: center;
-  align-self: center;
-  margin: 0 10px;
+  margin: 20px 5px 5px;
+  justify-content: space-evenly;
 }
 
-.button button {
+.button_FuF {
+  min-width: 78px;
+}
+
+/* .button button {
   background-color: dimgrey;
   color: #ffffff;
   padding: 2px 5px;
   box-shadow: 1px 2px darkslategrey;
   border-radius: 2px;
   min-width: 65px;
-}
+} */
 
-.button button:disabled {
-  background-color: #c91111;
+/* .button button:disabled {
+  background-color: #efb2b2;
   color: #ffffff;
   padding: 2px 5px;
   box-shadow: 1px 2px darkslategrey;
   border-radius: 2px;
   min-width: 65px;
-}
+} */

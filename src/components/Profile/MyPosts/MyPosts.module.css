@@ -1,9 +1,9 @@
 .myposts {
-  border: 2px solid teal;
+  border: 1px solid #6969e8;
 }
 
 .item {
-  background-color: blue;
+  background-color: #c9c9e9;
   width: 90%;
 }
 .like {
