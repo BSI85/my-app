@@ -75,16 +75,21 @@ const GitHub = () => {
   };
 
   return (
-    <div className={classes.container}>
-      <div>
-        <div>
-          <GitHubSearch value={searchTerm} onSubmit={onSubmit} />
-          <Button onClick={onResetClick}>Reset</Button>
-        </div>
-        <GitHubUsersList searchTerm={searchTerm} selectedUser={selectedUser} onUserSelect={onUserSelect} />
+    <div>
+      <div className={classes.header}>
+        Form to make requests from github in order to practice useState and useEffect
       </div>
-      <div>
-        <GitHubUserDetails selectedUser={selectedUser} />
+      <div className={classes.container}>
+        <div>
+          <div>
+            <GitHubSearch value={searchTerm} onSubmit={onSubmit} />
+            <Button onClick={onResetClick}>Reset</Button>
+          </div>
+          <GitHubUsersList searchTerm={searchTerm} selectedUser={selectedUser} onUserSelect={onUserSelect} />
+        </div>
+        <div>
+          <GitHubUserDetails selectedUser={selectedUser} />
+        </div>
       </div>
     </div>
   );

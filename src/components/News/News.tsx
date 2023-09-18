@@ -8,7 +8,8 @@ const News = () => {
   let [plyer2Counter, setPlyer2Counter] = useState(10);
 
   return (
-    <div>
+    <div style={{ margin: 40, textAlign: 'center', fontSize: 24 }}>
+      <div>Simple game to learn and practise useState</div>
       <Row justify="space-evenly">
         <Col span={6}>
           <div style={{ margin: 20, textAlign: 'center' }}>Игрок 1</div>
